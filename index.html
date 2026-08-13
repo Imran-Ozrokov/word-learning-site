@@ -2,13 +2,48 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Заучивание слов</title>
+    <title>WordLearn — Учим слова</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Учим иностранные слова</h1>
-    <div id="card">Нажмите кнопку, чтобы начать</div>
-    <button id="next-btn">Следующее слово</button>
+
+    <header class="header">
+        <div class="logo">Word<span>Learn</span></div>
+        <nav class="nav">
+            <a href="#" class="nav-link active">Главная</a>
+            <a href="#" class="nav-link">Тренажёр</a>
+            <a href="#" class="nav-link">Прогресс</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <aside class="sidebar">
+            <h3>В этом уроке:</h3>
+            <ul>
+                <li class="passed">1. Book <span class="check">✓</span></li>
+                <li class="current">2. Apple</li>
+                <li class="upcoming">3. Laptop</li>
+                <li class="upcoming">4. Window</li>
+            </ul>
+        </aside>
+
+        <section class="workout-zone">
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+
+            <div class="word-card" id="card">
+                <h1 id="word-eng">Apple</h1>
+                <p id="word-rus" style="display: none;">Яблоко</p>
+            </div>
+
+            <div class="buttons-group">
+                <button class="btn btn-know" id="know-btn">Знаю</button>
+                <button class="btn btn-dont-know" id="dont-know-btn">Не знаю</button>
+            </div>
+        </section>
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>
