@@ -10,39 +10,74 @@
     <header class="header">
         <div class="logo">Word<span>Learn</span></div>
         <nav class="nav">
-            <a href="#" class="nav-link active">Главная</a>
-            <a href="#" class="nav-link">Тренажёр</a>
-            <a href="#" class="nav-link">Прогресс</a>
+            <a href="#" class="nav-link active" id="nav-home">Главная</a>
+            <a href="#" class="nav-link" id="nav-trainer">Тренажёр</a>
         </nav>
     </header>
 
-    <main class="container">
-        <aside class="sidebar">
-            <h3>В этом уроке:</h3>
-            <ul>
-                <li class="passed">1. Book <span class="check">✓</span></li>
-                <li class="current">2. Apple</li>
-                <li class="upcoming">3. Laptop</li>
-                <li class="upcoming">4. Window</li>
-            </ul>
-        </aside>
-
-        <section class="workout-zone">
-            <div class="progress-container">
-                <div class="progress-bar"></div>
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <div id="home-page" class="page">
+        <main class="hero-container">
+            <div class="hero-left">
+                <h1>Прокачай свой словарный запас</h1>
+                <p class="subtitle">Изучайте новые иностранные слова каждый день с помощью интерактивных карточек.</p>
+                <button class="btn-start" id="start-learning-btn">Начать учить</button>
+                
+                <div class="categories-row">
+                    <div class="category-card" onclick="startWithCategory('travel')">
+                        <h4>🇬🇧 Путешествия</h4>
+                        <p>3 слова</p>
+                    </div>
+                    <div class="category-card" onclick="startWithCategory('food')">
+                        <h4>🍔 Еда и рестораны</h4>
+                        <p>3 слова</p>
+                    </div>
+                    <div class="category-card" onclick="startWithCategory('it')">
+                        <h4>💻 IT и Работа</h4>
+                        <p>3 слова</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="word-card" id="card">
-                <h1 id="word-eng">Apple</h1>
-                <p id="word-rus" style="display: none;">Яблоко</p>
+            <div class="hero-right">
+                <div class="goal-widget">
+                    <h3>Дневная цель</h3>
+                    <div class="goal-number">15</div>
+                    <p class="goal-sub">Слов на сегодня</p>
+                    <div class="goal-number green">8</div>
+                    <p class="goal-sub">Выучено сегодня</p>
+                </div>
             </div>
+        </main>
+    </div>
 
-            <div class="buttons-group">
-                <button class="btn btn-know" id="know-btn">Знаю</button>
-                <button class="btn btn-dont-know" id="dont-know-btn">Не знаю</button>
-            </div>
-        </section>
-    </main>
+    <!-- ЭКРАН ТРЕНАЖЁРА -->
+    <div id="trainer-page" class="page" style="display: none;">
+        <main class="container">
+            <aside class="sidebar">
+                <h3>В этом уроке:</h3>
+                <ul id="words-list">
+                    <!-- Список слов будет строиться автоматически -->
+                </ul>
+            </aside>
+
+            <section class="workout-zone">
+                <div class="progress-container">
+                    <div class="progress-bar" id="p-bar"></div>
+                </div>
+
+                <div class="word-card" id="card">
+                    <h1 id="word-eng">Apple</h1>
+                    <p id="word-rus" style="display: none;">Яблоко</p>
+                </div>
+
+                <div class="buttons-group">
+                    <button class="btn btn-know" id="know-btn">Знаю</button>
+                    <button class="btn btn-dont-know" id="dont-know-btn">Не знаю</button>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
