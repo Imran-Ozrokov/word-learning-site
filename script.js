@@ -1,48 +1,47 @@
-// Наша база данных слов
 const wordsDatabase = [
-    { foreign: "Ticket", russian: "Билет", category: "travel" },
-    { foreign: "Airport", russian: "Аэропорт", category: "travel" },
-    { foreign: "Hotel", russian: "Отель", category: "travel" },
-    { foreign: "Apple", russian: "Яблоко", category: "food" },
-    { foreign: "Dinner", russian: "Ужин", category: "food" },
-    { foreign: "Water", russian: "Вода", category: "food" },
-    { foreign: "Laptop", russian: "Ноутбук", category: "it" },
-    { foreign: "Code", russian: "Код", category: "it" },
-    { foreign: "Website", russian: "Веб-сайт", category: "it" }
+    { id: 1, foreign: "Ticket", russian: "Билет", category: "travel", learned: false },
+    { id: 2, foreign: "Airport", russian: "Аэропорт", category: "travel", learned: false },
+    { id: 3, foreign: "Hotel", russian: "Отель", category: "travel", learned: false },
+    { id: 4, foreign: "Apple", russian: "Яблоко", category: "food", learned: false },
+    { id: 5, foreign: "Dinner", russian: "Ужин", category: "food", learned: false },
+    { id: 6, foreign: "Water", russian: "Вода", category: "food", learned: false },
+    { id: 7, foreign: "Laptop", russian: "Ноутбук", category: "it", learned: false },
+    { id: 8, foreign: "Code", russian: "Код", category: "it", learned: false },
+    { id: 9, foreign: "Website", russian: "Веб-сайт", category: "it", learned: false }
 ];
 
 let currentWords = [];
 let currentIndex = 0;
+let todayLearnedCount = 8;
 
-// Элементы переключения страниц
-const homePage = document.getElementById("home-page");
-const trainerPage = document.getElementById("trainer-page");
-const navHome = document.getElementById("nav-home");
-const navTrainer = document.getElementById("nav-trainer");
+const pages = {
+    home: document.getElementById("home-page"),
+    trainer: document.getElementById("trainer-page"),
+    dictionary: document.getElementById("dictionary-page")
+};
 
-// Элементы тренажёра
-const card = document.getElementById("card");
-const engWord = document.getElementById("word-eng");
-const rusWord = document.getElementById("word-rus");
-const pBar = document.getElementById("p-bar");
-const wordsListElement = document.getElementById("words-list");
+const navLinks = {
+    home: document.getElementById("nav-home"),
+    trainer: document.getElementById("nav-trainer"),
+    dictionary: document.getElementById("nav-dictionary")
+};
 
-// Функция переключения экранов
-function showPage(pageId) {
-    if (pageId === "home") {
-        homePage.style.display = "flex";
-        trainerPage.style.display = "none";
-        navHome.classList.add("active");
-        navTrainer.classList.remove("active");
-    } else {
-        homePage.style.display = "none";
-        trainerPage.style.display = "flex";
-        navHome.classList.remove("active");
-        navTrainer.classList.add("active");
+function switchPage(pageId) {
+    Object.keys(pages).forEach(key => {
+        if (key === pageId) {
+            pages[key].style.display = (key === 'home' || key === 'dictionary') ? 'flex' : 'flex';
+            if (key === 'trainer') pages[key].style.display = 'flex';
+            navLinks[key].classList.add("active");
+        } else {
+            pages[key].style.display = "none";
+            navLinks[key].classList.remove("active");
+        }
+    });
+    if (pageId === 'dictionary') {
+        renderDictionary();
     }
 }
 
-// Запуск тренировки
 function startTraining(category = null) {
     if (category) {
         currentWords = wordsDatabase.filter(w => w.category === category);
@@ -50,25 +49,24 @@ function startTraining(category = null) {
         currentWords = [...wordsDatabase];
     }
     currentIndex = 0;
-    showPage("trainer");
+    switchPage("trainer");
     updateTrainer();
 }
 
-// Обновление данных на экране тренажёра
 function updateTrainer() {
     if (currentWords.length === 0) return;
 
-    // Показываем слово и прячем перевод
-    engWord.innerText = currentWords[currentIndex].foreign;
-    rusWord.innerText = currentWords[currentIndex].russian;
-    rusWord.style.display = "none";
+    const currentWord = currentWords[currentIndex];
+    document.getElementById("word-eng").innerText = currentWord.foreign;
+    document.getElementById("word-rus").innerText = currentWord.russian;
+    document.getElementById("word-rus").style.display = "none";
 
-    // Обновляем прогресс-бар
-    const progressPercent = ((currentIndex) / currentWords.length) * 100;
-    pBar.style.width = progressPercent + "%";
+    const progressPercent = (currentIndex / currentWords.length) * 100;
+    document.getElementById("p-bar").style.width = progressPercent + "%";
 
-    // Обновляем боковое меню со списком слов
-    wordsListElement.innerHTML = "";
+    const listElement = document.getElementById("words-list");
+    listElement.innerHTML = "";
+    
     currentWords.forEach((word, index) => {
         const li = document.createElement("li");
         if (index < currentIndex) {
@@ -81,35 +79,99 @@ function updateTrainer() {
             li.className = "upcoming";
             li.innerText = `${index + 1}. ${word.foreign}`;
         }
-        wordsListElement.appendChild(li);
+        listElement.appendChild(li);
     });
 }
 
-// Переключение на следующее слово
-function nextWord() {
+function handleAnswer(isKnown) {
+    if (isKnown) {
+        const wordInDb = wordsDatabase.find(w => w.id === currentWords[currentIndex].id);
+        if (wordInDb && !wordInDb.learned) {
+            wordInDb.learned = true;
+            todayLearnedCount++;
+            document.getElementById("goal-today").innerText = todayLearnedCount;
+        }
+    }
+
     if (currentIndex < currentWords.length - 1) {
         currentIndex++;
         updateTrainer();
     } else {
-        pBar.style.width = "100%";
-        alert("Отличная работа! Урок завершён.");
-        showPage("home");
+        document.getElementById("p-bar").style.width = "100%";
+        alert("Урок завершен! Отличная работа.");
+        switchPage("home");
     }
 }
 
-// Слушатели кликов
-document.getElementById("start-learning-btn").addEventListener("click", () => startTraining());
-navHome.addEventListener("click", () => showPage("home"));
-navTrainer.addEventListener("click", () => startTraining());
+function renderDictionary() {
+    const searchQuery = document.getElementById("search-input").value.toLowerCase();
+    const activeTag = document.querySelector(".tag.active").dataset.tag;
+    const grid = document.getElementById("dictionary-grid");
+    
+    grid.innerHTML = "";
 
-card.addEventListener("click", () => {
-    rusWord.style.display = rusWord.style.display === "none" ? "block" : "none";
+    const filtered = wordsDatabase.filter(word => {
+        const matchesSearch = word.foreign.toLowerCase().includes(searchQuery) || word.russian.toLowerCase().includes(searchQuery);
+        const matchesTag = activeTag === "all" || word.category === activeTag;
+        return matchesSearch && matchesTag;
+    });
+
+    filtered.forEach(word => {
+        const row = document.createElement("div");
+        row.className = "dict-row";
+        row.innerHTML = `
+            <div class="dict-info">
+                <div class="dict-eng">${word.foreign}</div>
+                <div class="dict-rus">— ${word.russian}</div>
+            </div>
+            <div class="status-circle ${word.learned ? 'learned' : ''}" data-id="${word.id}">
+                ${word.learned ? '✓' : '✓'}
+            </div>
+        `;
+        grid.appendChild(row);
+    });
+
+    const totalLearned = wordsDatabase.filter(w => w.learned).length;
+    document.getElementById("stats-all-words").innerText = wordsDatabase.length;
+    document.getElementById("stats-learned-words").innerText = totalLearned;
+
+    document.querySelectorAll(".status-circle").forEach(circle => {
+        circle.addEventListener("click", (e) => {
+            const id = parseInt(e.target.dataset.id);
+            const word = wordsDatabase.find(w => w.id === id);
+            if (word) {
+                word.learned = !word.learned;
+                renderDictionary();
+            }
+        });
+    });
+}
+
+document.getElementById("card").addEventListener("click", () => {
+    const rus = document.getElementById("word-rus");
+    rus.style.display = rus.style.display === "none" ? "block" : "none";
 });
 
-document.getElementById("know-btn").addEventListener("click", nextWord);
-document.getElementById("dont-know-btn").addEventListener("click", nextWord);
+document.getElementById("know-btn").addEventListener("click", () => handleAnswer(true));
+document.getElementById("dont-know-btn").addEventListener("click", () => handleAnswer(false));
+document.getElementById("start-learning-btn").addEventListener("click", () => startTraining());
 
-// Запуск по нажатию на карточки категорий
-window.startWithCategory = function(category) {
-    startTraining(category);
-};
+navLinks.home.addEventListener("click", () => switchPage("home"));
+navLinks.trainer.addEventListener("click", () => startTraining());
+navLinks.dictionary.addEventListener("click", () => switchPage("dictionary"));
+
+document.querySelectorAll(".category-card").forEach(card => {
+    card.addEventListener("click", () => {
+        startTraining(card.dataset.category);
+    });
+});
+
+document.getElementById("search-input").addEventListener("input", renderDictionary);
+
+document.querySelectorAll(".tag").forEach(tag => {
+    tag.addEventListener("click", () => {
+        document.querySelectorAll(".tag").forEach(t => t.classList.remove("active"));
+        tag.classList.add("active");
+        renderDictionary();
+    });
+});
