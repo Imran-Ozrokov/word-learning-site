@@ -197,21 +197,25 @@ function switchPage(pageId) {
 }
 
 function startTraining(category = null, shuffle = false) {
+    let filteredDatabase = [];
     if (category) {
-        currentWords = wordsDatabase.filter(w => w.category === category);
+        filteredDatabase = wordsDatabase.filter(w => w.category === category);
     } else {
-        currentWords = [...wordsDatabase];
+        filteredDatabase = [...wordsDatabase];
+    }
+    
+    currentWords = filteredDatabase.filter(w => !w.learned);
+    
+    if (currentWords.length === 0) {
+        alert("🎉 Отлично! Все доступные слова в этом режиме уже выучены. Сбрось статистику или добавь новые.");
+        switchPage("home");
+        return;
     }
     
     if (shuffle) {
         currentWords.sort(() => Math.random() - 0.5);
     }
     
-    if (currentWords.length === 0) {
-        alert("В выбранной категории отсутствуют слова.");
-        return;
-    }
-
     currentIndex = 0;
     switchPage("trainer");
     updateTrainer();
@@ -433,10 +437,19 @@ document.getElementById("speak-btn").addEventListener("click", (e) => {
 
 document.getElementById("know-btn").addEventListener("click", () => handleAnswer(true));
 document.getElementById("dont-know-btn").addEventListener("click", () => handleAnswer(false));
-document.getElementById("start-learning-btn").addEventListener("click", () => startTraining());
-document.getElementById("mix-learning-btn").addEventListener("click", () => startTraining(null, true));
+document.getElementById("start-learning-btn").addEventListener("click", () => {
+    startTraining();
+});
 
-navLinks.home.addEventListener("click", (e) => { e.preventDefault(); switchPage("home"); });
+document.getElementById("mix-learning-btn").addEventListener("click", () => {
+    startTraining(null, true);
+});
+
+navLinks.home.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchPage("home");
+});
+
 navLinks.trainer.addEventListener("click", (e) => {
     e.preventDefault();
     startTraining();
