@@ -149,7 +149,6 @@ document.getElementById("theme-toggle").addEventListener("click", () => {
     document.documentElement.setAttribute('data-theme', currentTheme);
     localStorage.setItem('wordlearn_theme', currentTheme);
 });
-
 function speakWord(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -159,6 +158,7 @@ function speakWord(text) {
         window.speechSynthesis.speak(utterance);
     }
 }
+
 function updateGlobalStats() {
     const totalWords = wordsDatabase.length;
     const totalLearned = wordsDatabase.filter(w => w.learned).length;
@@ -189,13 +189,12 @@ function switchPage(pageId) {
             navLinks[key].classList.remove("active");
         }
     });
-    
+
     if (pageId === 'dictionary') {
         renderDictionary();
     }
     updateGlobalStats();
 }
-
 function startTraining(category = null, shuffle = false) {
     let filteredDatabase = [];
     if (category) {
@@ -203,19 +202,20 @@ function startTraining(category = null, shuffle = false) {
     } else {
         filteredDatabase = [...wordsDatabase];
     }
-    
-    currentWords = filteredDatabase.filter(w => !w.learned);
-    
-    if (currentWords.length === 0) {
+
+    let unlearnedWords = filteredDatabase.filter(w => !w.learned);
+
+    if (unlearnedWords.length === 0) {
         alert("🎉 Отлично! Все доступные слова в этом режиме уже выучены. Сбрось статистику или добавь новые.");
         switchPage("home");
         return;
     }
-    
+
     if (shuffle) {
-        currentWords.sort(() => Math.random() - 0.5);
+        unlearnedWords.sort(() => Math.random() - 0.5);
     }
-    
+
+    currentWords = unlearnedWords.slice(0, 10);
     currentIndex = 0;
     switchPage("trainer");
     updateTrainer();
@@ -234,7 +234,7 @@ function updateTrainer() {
 
     const listElement = document.getElementById("words-list");
     listElement.innerHTML = "";
-    
+
     currentWords.forEach((word, index) => {
         const li = document.createElement("li");
         if (index < currentIndex) {
@@ -252,13 +252,12 @@ function updateTrainer() {
 
     resetTimer();
 }
-
 function handleAnswer(isKnown) {
     if (currentWords.length === 0) return;
 
     const currentWordInSession = currentWords[currentIndex];
     const targetWord = wordsDatabase.find(w => w.id === currentWordInSession.id);
-    
+
     if (targetWord) {
         targetWord.learned = isKnown;
         saveToStorage();
@@ -281,7 +280,7 @@ function resetTimer() {
     stopTimer();
     const isTimerActive = document.getElementById("timer-toggle").checked;
     const timerDisplay = document.getElementById("timer-display");
-    
+
     if (!isTimerActive) {
         timerDisplay.style.display = "none";
         return;
@@ -312,13 +311,12 @@ document.getElementById("timer-toggle").addEventListener("change", () => {
         resetTimer();
     }
 });
-
 function renderDictionary() {
     const searchQuery = document.getElementById("search-input").value.toLowerCase();
     const activeTagElement = document.querySelector(".tag.active");
     const activeTag = activeTagElement ? activeTagElement.dataset.tag : "all";
     const grid = document.getElementById("dictionary-grid");
-    
+
     grid.innerHTML = "";
 
     const filtered = wordsDatabase.filter(word => {
@@ -330,11 +328,17 @@ function renderDictionary() {
     filtered.forEach(word => {
         const row = document.createElement("div");
         row.className = "dict-row";
-        
-        const circleStyle = word.learned 
-            ? "background: rgba(16, 185, 129, 0.15); color: #10B981;" 
-            : "background: rgba(100, 116, 139, 0.15); color: #64748B;";
-        const circleIcon = word.learned ? "✓" : "•";
+
+        let circleStyle = "";
+        let circleIcon = "";
+
+        if (word.learned) {
+            circleStyle = "background: rgba(16, 185, 129, 0.15); color: #10B981;";
+            circleIcon = "✓";
+        } else {
+            circleStyle = "background: rgba(239, 68, 68, 0.15); color: #EF4444;";
+            circleIcon = "❌";
+        }
 
         row.innerHTML = `
             <div class="dict-info">
@@ -376,7 +380,6 @@ function renderDictionary() {
 
     updateGlobalStats();
 }
-
 const aboutModal = document.getElementById("about-modal");
 document.getElementById("logo-btn").addEventListener("click", () => { aboutModal.style.display = "flex"; });
 document.getElementById("close-modal-btn").addEventListener("click", () => { aboutModal.style.display = "none"; });
@@ -415,14 +418,13 @@ document.getElementById("add-word-form").addEventListener("submit", (e) => {
 document.getElementById("reset-db-btn").addEventListener("click", () => {
     if (confirm("Вы уверены, что хотите сбросить весь прогресс и кастомные слова?")) {
         localStorage.removeItem('wordlearn_db');
-        wordsDatabase = [...initialWords];
+        wordsDatabase = JSON.parse(JSON.stringify(initialWords));
         saveToStorage();
         aboutModal.style.display = "none";
         updateGlobalStats();
         alert("Прогресс успешно сброшен к начальным настройкам.");
     }
 });
-
 document.getElementById("card").addEventListener("click", () => {
     const rus = document.getElementById("word-rus");
     rus.style.display = rus.style.display === "none" ? "block" : "none";
@@ -437,6 +439,7 @@ document.getElementById("speak-btn").addEventListener("click", (e) => {
 
 document.getElementById("know-btn").addEventListener("click", () => handleAnswer(true));
 document.getElementById("dont-know-btn").addEventListener("click", () => handleAnswer(false));
+
 document.getElementById("start-learning-btn").addEventListener("click", () => {
     startTraining();
 });
@@ -477,3 +480,4 @@ document.querySelectorAll(".tag").forEach((tag) => {
 });
 
 updateGlobalStats();
+switchPage("home");
