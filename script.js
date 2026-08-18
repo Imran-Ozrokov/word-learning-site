@@ -105,8 +105,20 @@ const initialWords = [
     { id: 104, foreign: "Backend", russian: "Бэкенд", category: "it", learned: false },
     { id: 105, foreign: "API", russian: "API / Интерфейс приложений", category: "it", learned: false }
 ];
+let savedData = localStorage.getItem('wordlearn_db');
+let wordsDatabase = initialWords;
 
-let wordsDatabase = JSON.parse(localStorage.getItem('wordlearn_db')) || initialWords;
+if (savedData) {
+    let parsed = JSON.parse(savedData);
+    if (parsed.length === initialWords.length) {
+        wordsDatabase = parsed;
+    } else {
+        localStorage.setItem('wordlearn_db', JSON.stringify(initialWords));
+        wordsDatabase = initialWords;
+    }
+} else {
+    localStorage.setItem('wordlearn_db', JSON.stringify(initialWords));
+}
 
 let currentWords = [];
 let currentIndex = 0;
@@ -126,7 +138,6 @@ const navLinks = {
 function saveToStorage() {
     localStorage.setItem('wordlearn_db', JSON.stringify(wordsDatabase));
 }
-
 function updateGlobalStats() {
     const totalWords = wordsDatabase.length;
     const totalLearned = wordsDatabase.filter(w => w.learned).length;
@@ -278,12 +289,21 @@ function renderDictionary() {
 }
 
 const modal = document.getElementById("about-modal");
-document.getElementById("logo-btn").addEventListener("click", () => {
-    modal.style.display = "flex";
-});
-document.getElementById("close-modal-btn").addEventListener("click", () => {
-    modal.style.display = "none";
-});
+const logoBtn = document.getElementById("logo-btn");
+
+if (logoBtn && modal) {
+    logoBtn.addEventListener("click", () => {
+        modal.style.display = "flex";
+    });
+}
+
+const closeBtn = document.getElementById("close-modal-btn");
+if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+}
+
 window.addEventListener("click", (e) => {
     if (e.target === modal) {
         modal.style.display = "none";
