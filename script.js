@@ -1,18 +1,17 @@
 const wordsDatabase = [
-    { id: 1, foreign: "Ticket", russian: "Билет", category: "travel", learned: false },
-    { id: 2, foreign: "Airport", russian: "Аэропорт", category: "travel", learned: false },
-    { id: 3, foreign: "Hotel", russian: "Отель", category: "travel", learned: false },
-    { id: 4, foreign: "Apple", russian: "Яблоко", category: "food", learned: false },
-    { id: 5, foreign: "Dinner", russian: "Ужин", category: "food", learned: false },
-    { id: 6, foreign: "Water", russian: "Вода", category: "food", learned: false },
-    { id: 7, foreign: "Laptop", russian: "Ноутбук", category: "it", learned: false },
-    { id: 8, foreign: "Code", russian: "Код", category: "it", learned: false },
+    { id: 1, foreign: "Ticket", russian: "Билет", category: "travel", learned: true },
+    { id: 2, foreign: "Airport", russian: "Аэропорт", category: "travel", learned: true },
+    { id: 3, foreign: "Hotel", russian: "Отель", category: "travel", learned: true },
+    { id: 4, foreign: "Apple", russian: "Яблоко", category: "food", learned: true },
+    { id: 5, foreign: "Dinner", russian: "Ужин", category: "food", learned: true },
+    { id: 6, foreign: "Water", russian: "Вода", category: "food", learned: true },
+    { id: 7, foreign: "Laptop", russian: "Ноутбук", category: "it", learned: true },
+    { id: 8, foreign: "Code", russian: "Код", category: "it", learned: true },
     { id: 9, foreign: "Website", russian: "Веб-сайт", category: "it", learned: false }
 ];
 
 let currentWords = [];
 let currentIndex = 0;
-let todayLearnedCount = 8;
 
 const pages = {
     home: document.getElementById("home-page"),
@@ -29,8 +28,7 @@ const navLinks = {
 function switchPage(pageId) {
     Object.keys(pages).forEach(key => {
         if (key === pageId) {
-            pages[key].style.display = (key === 'home' || key === 'dictionary') ? 'flex' : 'flex';
-            if (key === 'trainer') pages[key].style.display = 'flex';
+            pages[key].style.display = "flex";
             navLinks[key].classList.add("active");
         } else {
             pages[key].style.display = "none";
@@ -83,16 +81,7 @@ function updateTrainer() {
     });
 }
 
-function handleAnswer(isKnown) {
-    if (isKnown) {
-        const wordInDb = wordsDatabase.find(w => w.id === currentWords[currentIndex].id);
-        if (wordInDb && !wordInDb.learned) {
-            wordInDb.learned = true;
-            todayLearnedCount++;
-            document.getElementById("goal-today").innerText = todayLearnedCount;
-        }
-    }
-
+function handleAnswer() {
     if (currentIndex < currentWords.length - 1) {
         currentIndex++;
         updateTrainer();
@@ -124,9 +113,7 @@ function renderDictionary() {
                 <div class="dict-eng">${word.foreign}</div>
                 <div class="dict-rus">— ${word.russian}</div>
             </div>
-            <div class="status-circle ${word.learned ? 'learned' : ''}" data-id="${word.id}">
-                ${word.learned ? '✓' : '✓'}
-            </div>
+            <div class="status-circle">✓</div>
         `;
         grid.appendChild(row);
     });
@@ -134,17 +121,6 @@ function renderDictionary() {
     const totalLearned = wordsDatabase.filter(w => w.learned).length;
     document.getElementById("stats-all-words").innerText = wordsDatabase.length;
     document.getElementById("stats-learned-words").innerText = totalLearned;
-
-    document.querySelectorAll(".status-circle").forEach(circle => {
-        circle.addEventListener("click", (e) => {
-            const id = parseInt(e.target.dataset.id);
-            const word = wordsDatabase.find(w => w.id === id);
-            if (word) {
-                word.learned = !word.learned;
-                renderDictionary();
-            }
-        });
-    });
 }
 
 document.getElementById("card").addEventListener("click", () => {
@@ -152,8 +128,8 @@ document.getElementById("card").addEventListener("click", () => {
     rus.style.display = rus.style.display === "none" ? "block" : "none";
 });
 
-document.getElementById("know-btn").addEventListener("click", () => handleAnswer(true));
-document.getElementById("dont-know-btn").addEventListener("click", () => handleAnswer(false));
+document.getElementById("know-btn").addEventListener("click", handleAnswer);
+document.getElementById("dont-know-btn").addEventListener("click", handleAnswer);
 document.getElementById("start-learning-btn").addEventListener("click", () => startTraining());
 
 navLinks.home.addEventListener("click", () => switchPage("home"));
