@@ -1,4 +1,4 @@
-const wordsDatabase = [
+const initialWords = [
     { id: 1, foreign: "Ticket", russian: "Билет", category: "travel", learned: true },
     { id: 2, foreign: "Airport", russian: "Аэропорт", category: "travel", learned: true },
     { id: 3, foreign: "Hotel", russian: "Отель", category: "travel", learned: true },
@@ -9,6 +9,8 @@ const wordsDatabase = [
     { id: 8, foreign: "Code", russian: "Код", category: "it", learned: true },
     { id: 9, foreign: "Website", russian: "Веб-сайт", category: "it", learned: false }
 ];
+
+let wordsDatabase = JSON.parse(localStorage.getItem('wordlearn_db')) || initialWords;
 
 let currentWords = [];
 let currentIndex = 0;
@@ -25,6 +27,21 @@ const navLinks = {
     dictionary: document.getElementById("nav-dictionary")
 };
 
+function saveToStorage() {
+    localStorage.setItem('wordlearn_db', JSON.stringify(wordsDatabase));
+}
+
+function updateGlobalStats() {
+    const totalWords = wordsDatabase.length;
+    const totalLearned = wordsDatabase.filter(w => w.learned).length;
+
+    if (document.getElementById("goal-total")) document.getElementById("goal-total").innerText = totalWords;
+    if (document.getElementById("goal-today")) document.getElementById("goal-today").innerText = totalLearned;
+
+    if (document.getElementById("stats-all-words")) document.getElementById("stats-all-words").innerText = totalWords;
+    if (document.getElementById("stats-learned-words")) document.getElementById("stats-learned-words").innerText = totalLearned;
+}
+
 function switchPage(pageId) {
     Object.keys(pages).forEach(key => {
         if (key === pageId) {
@@ -35,9 +52,11 @@ function switchPage(pageId) {
             navLinks[key].classList.remove("active");
         }
     });
+    
     if (pageId === 'dictionary') {
         renderDictionary();
     }
+    updateGlobalStats();
 }
 
 function startTraining(category = null) {
@@ -46,6 +65,12 @@ function startTraining(category = null) {
     } else {
         currentWords = [...wordsDatabase];
     }
+    
+    if (currentWords.length === 0) {
+        alert("В выбранной категории отсутствуют слова.");
+        return;
+    }
+
     currentIndex = 0;
     switchPage("trainer");
     updateTrainer();
@@ -81,20 +106,33 @@ function updateTrainer() {
     });
 }
 
-function handleAnswer() {
+function handleAnswer(isKnown) {
+    if (currentWords.length === 0) return;
+
+    const currentWordInSession = currentWords[currentIndex];
+    const targetWord = wordsDatabase.find(w => w.id === currentWordInSession.id);
+    
+    if (targetWord) {
+        targetWord.learned = isKnown;
+        saveToStorage();
+    }
+
     if (currentIndex < currentWords.length - 1) {
         currentIndex++;
         updateTrainer();
     } else {
         document.getElementById("p-bar").style.width = "100%";
-        alert("Урок завершен! Отличная работа.");
-        switchPage("home");
+        setTimeout(() => {
+            alert("Урок завершен! Отличная работа.");
+            switchPage("home");
+        }, 200);
     }
 }
 
 function renderDictionary() {
     const searchQuery = document.getElementById("search-input").value.toLowerCase();
-    const activeTag = document.querySelector(".tag.active").dataset.tag;
+    const activeTagElement = document.querySelector(".tag.active");
+    const activeTag = activeTagElement ? activeTagElement.dataset.tag : "all";
     const grid = document.getElementById("dictionary-grid");
     
     grid.innerHTML = "";
@@ -108,19 +146,31 @@ function renderDictionary() {
     filtered.forEach(word => {
         const row = document.createElement("div");
         row.className = "dict-row";
+        
+        const circleStyle = word.learned 
+            ? "background: rgba(16, 185, 129, 0.15); color: #10B981;" 
+            : "background: rgba(100, 116, 139, 0.15); color: #64748B;";
+        const circleIcon = word.learned ? "✓" : "•";
+
         row.innerHTML = `
             <div class="dict-info">
                 <div class="dict-eng">${word.foreign}</div>
                 <div class="dict-rus">— ${word.russian}</div>
             </div>
-            <div class="status-circle">✓</div>
+            <div class="status-circle" style="${circleStyle}">${circleIcon}</div>
         `;
+
+        row.addEventListener("click", () => {
+            word.learned = !word.learned;
+            saveToStorage();
+            renderDictionary();
+            updateGlobalStats();
+        });
+
         grid.appendChild(row);
     });
 
-    const totalLearned = wordsDatabase.filter(w => w.learned).length;
-    document.getElementById("stats-all-words").innerText = wordsDatabase.length;
-    document.getElementById("stats-learned-words").innerText = totalLearned;
+    updateGlobalStats();
 }
 
 document.getElementById("card").addEventListener("click", () => {
@@ -128,13 +178,13 @@ document.getElementById("card").addEventListener("click", () => {
     rus.style.display = rus.style.display === "none" ? "block" : "none";
 });
 
-document.getElementById("know-btn").addEventListener("click", handleAnswer);
-document.getElementById("dont-know-btn").addEventListener("click", handleAnswer);
+document.getElementById("know-btn").addEventListener("click", () => handleAnswer(true));
+document.getElementById("dont-know-btn").addEventListener("click", () => handleAnswer(false));
 document.getElementById("start-learning-btn").addEventListener("click", () => startTraining());
 
-navLinks.home.addEventListener("click", () => switchPage("home"));
-navLinks.trainer.addEventListener("click", () => startTraining());
-navLinks.dictionary.addEventListener("click", () => switchPage("dictionary"));
+navLinks.home.addEventListener("click", (e) => { e.preventDefault(); switchPage("home"); });
+navLinks.trainer.addEventListener("click", (e) => { e.preventDefault(); startTraining(); });
+navLinks.dictionary.addEventListener("click", (e) => { e.preventDefault(); switchPage("dictionary"); });
 
 document.querySelectorAll(".category-card").forEach(card => {
     card.addEventListener("click", () => {
@@ -151,3 +201,5 @@ document.querySelectorAll(".tag").forEach(tag => {
         renderDictionary();
     });
 });
+
+updateGlobalStats();
