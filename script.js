@@ -110,7 +110,7 @@ let wordsDatabase = initialWords;
 
 if (savedData) {
     let parsed = JSON.parse(savedData);
-    if (parsed.length === initialWords.length) {
+    if (parsed.length >= 105) {
         wordsDatabase = parsed;
     } else {
         localStorage.setItem('wordlearn_db', JSON.stringify(initialWords));
@@ -122,6 +122,8 @@ if (savedData) {
 
 let currentWords = [];
 let currentIndex = 0;
+let timerInterval = null;
+let timeLeft = 10;
 
 const pages = {
     home: document.getElementById("home-page"),
@@ -137,6 +139,25 @@ const navLinks = {
 
 function saveToStorage() {
     localStorage.setItem('wordlearn_db', JSON.stringify(wordsDatabase));
+}
+
+let currentTheme = localStorage.getItem('wordlearn_theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+
+document.getElementById("theme-toggle").addEventListener("click", () => {
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('wordlearn_theme', currentTheme);
+});
+
+function speakWord(text) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
 }
 function updateGlobalStats() {
     const totalWords = wordsDatabase.length;
@@ -158,6 +179,7 @@ function updateGlobalStats() {
 }
 
 function switchPage(pageId) {
+    stopTimer();
     Object.keys(pages).forEach(key => {
         if (key === pageId) {
             pages[key].style.display = "flex";
@@ -174,11 +196,15 @@ function switchPage(pageId) {
     updateGlobalStats();
 }
 
-function startTraining(category = null) {
+function startTraining(category = null, shuffle = false) {
     if (category) {
         currentWords = wordsDatabase.filter(w => w.category === category);
     } else {
         currentWords = [...wordsDatabase];
+    }
+    
+    if (shuffle) {
+        currentWords.sort(() => Math.random() - 0.5);
     }
     
     if (currentWords.length === 0) {
@@ -219,6 +245,8 @@ function updateTrainer() {
         }
         listElement.appendChild(li);
     });
+
+    resetTimer();
 }
 
 function handleAnswer(isKnown) {
@@ -236,6 +264,7 @@ function handleAnswer(isKnown) {
         currentIndex++;
         updateTrainer();
     } else {
+        stopTimer();
         document.getElementById("p-bar").style.width = "100%";
         setTimeout(() => {
             alert("Урок завершен! Отличная работа.");
@@ -243,6 +272,42 @@ function handleAnswer(isKnown) {
         }, 200);
     }
 }
+
+function resetTimer() {
+    stopTimer();
+    const isTimerActive = document.getElementById("timer-toggle").checked;
+    const timerDisplay = document.getElementById("timer-display");
+    
+    if (!isTimerActive) {
+        timerDisplay.style.display = "none";
+        return;
+    }
+
+    timeLeft = 10;
+    timerDisplay.style.display = "block";
+    timerDisplay.innerText = `${timeLeft}с`;
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.innerText = `${timeLeft}с`;
+        if (timeLeft <= 0) {
+            handleAnswer(false);
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+document.getElementById("timer-toggle").addEventListener("change", () => {
+    if (pages.trainer.style.display === "flex") {
+        resetTimer();
+    }
+});
 
 function renderDictionary() {
     const searchQuery = document.getElementById("search-input").value.toLowerCase();
@@ -269,17 +334,37 @@ function renderDictionary() {
 
         row.innerHTML = `
             <div class="dict-info">
+                <div class="status-circle" style="${circleStyle}">${circleIcon}</div>
                 <div class="dict-eng">${word.foreign}</div>
                 <div class="dict-rus">— ${word.russian}</div>
             </div>
-            <div class="status-circle" style="${circleStyle}">${circleIcon}</div>
+            <div class="dict-actions">
+                <button class="btn-row-speak">🔊</button>
+                <button class="btn-row-delete">&times;</button>
+            </div>
         `;
 
-        row.addEventListener("click", () => {
+        row.querySelector(".status-circle").addEventListener("click", (e) => {
+            e.stopPropagation();
             word.learned = !word.learned;
             saveToStorage();
             renderDictionary();
             updateGlobalStats();
+        });
+
+        row.querySelector(".btn-row-speak").addEventListener("click", (e) => {
+            e.stopPropagation();
+            speakWord(word.foreign);
+        });
+
+        row.querySelector(".btn-row-delete").addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (confirm(`Удалить слово "${word.foreign}"?`)) {
+                wordsDatabase = wordsDatabase.filter(w => w.id !== word.id);
+                saveToStorage();
+                renderDictionary();
+                updateGlobalStats();
+            }
         });
 
         grid.appendChild(row);
@@ -288,25 +373,49 @@ function renderDictionary() {
     updateGlobalStats();
 }
 
-const modal = document.getElementById("about-modal");
-const logoBtn = document.getElementById("logo-btn");
+const aboutModal = document.getElementById("about-modal");
+document.getElementById("logo-btn").addEventListener("click", () => { aboutModal.style.display = "flex"; });
+document.getElementById("close-modal-btn").addEventListener("click", () => { aboutModal.style.display = "none"; });
 
-if (logoBtn && modal) {
-    logoBtn.addEventListener("click", () => {
-        modal.style.display = "flex";
-    });
-}
-
-const closeBtn = document.getElementById("close-modal-btn");
-if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-}
+const addModal = document.getElementById("add-word-modal");
+document.getElementById("open-add-modal-btn").addEventListener("click", () => { addModal.style.display = "flex"; });
+document.getElementById("close-add-modal-btn").addEventListener("click", () => { addModal.style.display = "none"; });
 
 window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-        modal.style.display = "none";
+    if (e.target === aboutModal) aboutModal.style.display = "none";
+    if (e.target === addModal) addModal.style.display = "none";
+});
+
+document.getElementById("add-word-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const foreign = document.getElementById("new-foreign").value.trim();
+    const russian = document.getElementById("new-russian").value.trim();
+    const category = document.getElementById("new-category").value;
+
+    const newWord = {
+        id: Date.now(),
+        foreign: foreign,
+        russian: russian,
+        category: category,
+        learned: false
+    };
+
+    wordsDatabase.push(newWord);
+    saveToStorage();
+    document.getElementById("add-word-form").reset();
+    addModal.style.display = "none";
+    renderDictionary();
+    updateGlobalStats();
+});
+
+document.getElementById("reset-db-btn").addEventListener("click", () => {
+    if (confirm("Вы уверены, что хотите сбросить весь прогресс и кастомные слова?")) {
+        localStorage.removeItem('wordlearn_db');
+        wordsDatabase = [...initialWords];
+        saveToStorage();
+        aboutModal.style.display = "none";
+        updateGlobalStats();
+        alert("Прогресс успешно сброшен к начальным настройкам.");
     }
 });
 
@@ -315,15 +424,30 @@ document.getElementById("card").addEventListener("click", () => {
     rus.style.display = rus.style.display === "none" ? "block" : "none";
 });
 
+document.getElementById("speak-btn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (currentWords.length > 0) {
+        speakWord(currentWords[currentIndex].foreign);
+    }
+});
+
 document.getElementById("know-btn").addEventListener("click", () => handleAnswer(true));
 document.getElementById("dont-know-btn").addEventListener("click", () => handleAnswer(false));
 document.getElementById("start-learning-btn").addEventListener("click", () => startTraining());
+document.getElementById("mix-learning-btn").addEventListener("click", () => startTraining(null, true));
 
 navLinks.home.addEventListener("click", (e) => { e.preventDefault(); switchPage("home"); });
-navLinks.trainer.addEventListener("click", (e) => { e.preventDefault(); startTraining(); });
-navLinks.dictionary.addEventListener("click", (e) => { e.preventDefault(); switchPage("dictionary"); });
+navLinks.trainer.addEventListener("click", (e) => {
+    e.preventDefault();
+    startTraining();
+});
 
-document.querySelectorAll(".category-card").forEach(card => {
+navLinks.dictionary.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchPage("dictionary");
+});
+
+document.querySelectorAll(".category-card").forEach((card) => {
     card.addEventListener("click", () => {
         startTraining(card.dataset.category);
     });
@@ -331,9 +455,9 @@ document.querySelectorAll(".category-card").forEach(card => {
 
 document.getElementById("search-input").addEventListener("input", renderDictionary);
 
-document.querySelectorAll(".tag").forEach(tag => {
+document.querySelectorAll(".tag").forEach((tag) => {
     tag.addEventListener("click", () => {
-        document.querySelectorAll(".tag").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tag").forEach((t) => t.classList.remove("active"));
         tag.classList.add("active");
         renderDictionary();
     });
