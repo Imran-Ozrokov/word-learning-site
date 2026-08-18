@@ -14,17 +14,13 @@ body {
     width: 100%;
     max-width: 1440px;
     height: 80px;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
+    background: #FFFFFF;
     border-bottom: 1px solid #E2E8F0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 40px;
     box-sizing: border-box;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .logo {
@@ -43,10 +39,9 @@ body {
     font-weight: 500;
     margin-left: 30px;
     color: #64748B;
-    transition: color 0.2s;
 }
 
-.nav a:hover, .nav a.active {
+.nav a.active {
     color: #4F46E5;
 }
 
@@ -97,13 +92,6 @@ body {
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 40px;
-    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-start:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(79, 70, 229, 0.35);
 }
 
 .categories-row {
@@ -118,12 +106,6 @@ body {
     padding: 16px;
     width: 180px;
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
-}
-
-.category-card:hover {
-    transform: translateY(-2px);
-    border-color: #4F46E5;
 }
 
 .category-card h4 { margin: 0 0 5px 0; font-size: 14px; }
@@ -183,7 +165,6 @@ body {
     height: 100%;
     background: #4F46E5;
     border-radius: 4px;
-    transition: width 0.3s ease;
 }
 
 .word-card {
@@ -198,7 +179,6 @@ body {
     align-items: center;
     cursor: pointer;
     border: 1px solid #E2E8F0;
-    user-select: none;
 }
 
 .word-card h1 { font-size: 36px; margin: 0; color: #0F172A; }
@@ -213,9 +193,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     border: none;
-    transition: transform 0.1s;
 }
-.btn:active { transform: scale(0.98); }
 .btn-know { background: #10B981; color: #FFFFFF; }
 .btn-dont-know { background: #FFFFFF; color: #EF4444; border: 1px solid #EF4444; }
 
@@ -232,10 +210,6 @@ body {
     font-size: 16px;
     box-sizing: border-box;
     outline: none;
-}
-
-#search-input:focus {
-    border-color: #4F46E5;
 }
 
 .tags-container {
@@ -270,7 +244,8 @@ body {
 }
 
 .dict-row {
-    width: 880px;
+    width: 100%;
+    max-width: 880px;
     height: 72px;
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
@@ -295,18 +270,11 @@ body {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(226, 232, 240, 0.5);
+    background: rgba(16, 185, 129, 0.15);
+    color: #10B981;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #64748B;
     font-weight: bold;
     font-size: 14px;
-    cursor: pointer;
-    user-select: none;
-}
-
-.status-circle.learned {
-    background: rgba(16, 185, 129, 0.15);
-    color: #10B981;
 }
