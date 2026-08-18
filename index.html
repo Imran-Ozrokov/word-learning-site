@@ -9,13 +9,23 @@
 <body>
 
     <header class="header">
-        <div class="logo">Word<span>Learn</span></div>
+        <div class="logo" id="logo-btn" style="cursor: pointer;">Word<span>Learn</span></div>
         <nav class="nav">
             <a href="#" class="nav-link active" id="nav-home">Главная</a>
             <a href="#" class="nav-link" id="nav-trainer">Тренажёр</a>
             <a href="#" class="nav-link" id="nav-dictionary">Прогресс</a>
         </nav>
     </header>
+
+    <div id="about-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal-btn">&times;</span>
+            <h2>О проекте WordLearn</h2>
+            <p>Привет! Это простое и удобное приложение для тех, кто хочет расширить свой словарный запас без зубрежки. В основе лежат интерактивные карточки: вы тренируете память, проверяете себя, а система сама отслеживает ваш ежедневный прогресс.</p>
+            <p>Проект создал <strong>Озроков Имран</strong>. Весь код написан вручную с акцентом на скорость работы, чистый интерфейс и удобство для пользователя.</p>
+            <div class="modal-footer">© 2026 WordLearn. Разработано с душой.</div>
+        </div>
+    </div>
 
     <div id="home-page" class="page">
         <main class="hero-container">
@@ -27,15 +37,15 @@
                 <div class="categories-row">
                     <div class="category-card" data-category="travel">
                         <h4>🇬🇧 Путешествия</h4>
-                        <p>3 слова</p>
+                        <p id="count-travel">35 слов</p>
                     </div>
                     <div class="category-card" data-category="food">
                         <h4>🍔 Еда и рестораны</h4>
-                        <p>3 слова</p>
+                        <p id="count-food">35 слов</p>
                     </div>
                     <div class="category-card" data-category="it">
                         <h4>💻 IT и Работа</h4>
-                        <p>3 слова</p>
+                        <p id="count-it">35 слов</p>
                     </div>
                 </div>
             </div>
@@ -43,7 +53,7 @@
             <div class="hero-right">
                 <div class="goal-widget">
                     <h3>Дневная цель</h3>
-                    <div class="goal-number" id="goal-total">9</div>
+                    <div class="goal-number" id="goal-total">0</div>
                     <p class="goal-sub">Слов всего</p>
                     <div class="goal-number green" id="goal-today">0</div>
                     <p class="goal-sub">Выучено слов</p>
