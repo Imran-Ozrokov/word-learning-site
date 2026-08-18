@@ -30,7 +30,7 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .header {
@@ -445,6 +445,7 @@ body {
     cursor: pointer;
     margin-top: 10px;
 }
+
 .btn-reset {
     background: transparent;
     border: 1px solid var(--danger);
@@ -455,19 +456,21 @@ body {
     font-weight: bold;
     margin-top: 15px;
 }
-.modal-footer { 
-    margin-top: 24px; 
-    font-size: 13px; 
-    color: var(--text-muted); 
-    text-align: right; 
+
+.modal-footer {
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: right;
 }
-@keyframes fadeIn { 
-    from { 
-        opacity: 0; 
-        transform: translateY(5px); 
-    } 
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    } 
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
