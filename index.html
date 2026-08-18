@@ -12,10 +12,10 @@
         <nav class="nav">
             <a href="#" class="nav-link active" id="nav-home">Главная</a>
             <a href="#" class="nav-link" id="nav-trainer">Тренажёр</a>
+            <a href="#" class="nav-link" id="nav-dictionary">Прогресс</a>
         </nav>
     </header>
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
     <div id="home-page" class="page">
         <main class="hero-container">
             <div class="hero-left">
@@ -24,15 +24,15 @@
                 <button class="btn-start" id="start-learning-btn">Начать учить</button>
                 
                 <div class="categories-row">
-                    <div class="category-card" onclick="startWithCategory('travel')">
+                    <div class="category-card" data-category="travel">
                         <h4>🇬🇧 Путешествия</h4>
                         <p>3 слова</p>
                     </div>
-                    <div class="category-card" onclick="startWithCategory('food')">
+                    <div class="category-card" data-category="food">
                         <h4>🍔 Еда и рестораны</h4>
                         <p>3 слова</p>
                     </div>
-                    <div class="category-card" onclick="startWithCategory('it')">
+                    <div class="category-card" data-category="it">
                         <h4>💻 IT и Работа</h4>
                         <p>3 слова</p>
                     </div>
@@ -42,23 +42,20 @@
             <div class="hero-right">
                 <div class="goal-widget">
                     <h3>Дневная цель</h3>
-                    <div class="goal-number">15</div>
+                    <div class="goal-number" id="goal-total">15</div>
                     <p class="goal-sub">Слов на сегодня</p>
-                    <div class="goal-number green">8</div>
+                    <div class="goal-number green" id="goal-today">8</div>
                     <p class="goal-sub">Выучено сегодня</p>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- ЭКРАН ТРЕНАЖЁРА -->
     <div id="trainer-page" class="page" style="display: none;">
         <main class="container">
             <aside class="sidebar">
                 <h3>В этом уроке:</h3>
-                <ul id="words-list">
-                    <!-- Список слов будет строиться автоматически -->
-                </ul>
+                <ul id="words-list"></ul>
             </aside>
 
             <section class="workout-zone">
@@ -76,6 +73,37 @@
                     <button class="btn btn-dont-know" id="dont-know-btn">Не знаю</button>
                 </div>
             </section>
+        </main>
+    </div>
+
+    <div id="dictionary-page" class="page" style="display: none;">
+        <main class="container">
+            <div class="dictionary-left">
+                <h2>Мой словарь</h2>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="🔍 Найти слово по словарю...">
+                </div>
+
+                <div class="tags-container">
+                    <button class="tag active" data-tag="all">Все слова</button>
+                    <button class="tag" data-tag="travel">Путешествия</button>
+                    <button class="tag" data-tag="food">Еда</button>
+                    <button class="tag" data-tag="it">IT и Работа</button>
+                </div>
+
+                <div class="words-grid" id="dictionary-grid"></div>
+            </div>
+
+            <div class="dictionary-right">
+                <div class="stats-widget">
+                    <h3>Статистика</h3>
+                    <div class="stats-num" id="stats-all-words">9</div>
+                    <p class="stats-label">Всего слов в словаре</p>
+                    <div class="stats-num green" id="stats-learned-words">0</div>
+                    <p class="stats-label">Выучено полностью</p>
+                </div>
+            </div>
         </main>
     </div>
 
