@@ -1,483 +1,73 @@
 const initialWords = [
-    { id: 1, foreign: "Ticket", russian: "Билет", category: "travel", learned: false },
-    { id: 2, foreign: "Airport", russian: "Аэропорт", category: "travel", learned: false },
-    { id: 3, foreign: "Hotel", russian: "Отель", category: "travel", learned: false },
-    { id: 4, foreign: "Passport", russian: "Паспорт", category: "travel", learned: false },
-    { id: 5, foreign: "Luggage", russian: "Багаж", category: "travel", learned: false },
-    { id: 6, foreign: "Flight", russian: "Рейс / Полет", category: "travel", learned: false },
-    { id: 7, foreign: "Train", russian: "Поезд", category: "travel", learned: false },
-    { id: 8, foreign: "Beach", russian: "Пляж", category: "travel", learned: false },
-    { id: 9, foreign: "Map", russian: "Карта", category: "travel", learned: false },
-    { id: 10, foreign: "Guide", russian: "Гид / Экскурсовод", category: "travel", learned: false },
-    { id: 11, foreign: "Journey", russian: "Путешествие", category: "travel", learned: false },
-    { id: 12, foreign: "Island", russian: "Остров", category: "travel", learned: false },
-    { id: 13, foreign: "Route", russian: "Маршрут", category: "travel", learned: false },
-    { id: 14, foreign: "Border", russian: "Граница", category: "travel", learned: false },
-    { id: 15, foreign: "Customs", russian: "Таможня", category: "travel", learned: false },
-    { id: 16, foreign: "Suitcase", russian: "Чемодан", category: "travel", learned: false },
-    { id: 17, foreign: "Visa", russian: "Виза", category: "travel", learned: false },
-    { id: 18, foreign: "Cruise", russian: "Круиз", category: "travel", learned: false },
-    { id: 19, foreign: "Excursion", russian: "Экскурсия", category: "travel", learned: false },
-    { id: 20, foreign: "Resort", russian: "Курорт", category: "travel", learned: false },
-    { id: 21, foreign: "Booking", russian: "Бронирование", category: "travel", learned: false },
-    { id: 22, foreign: "Destination", russian: "Направление", category: "travel", learned: false },
-    { id: 23, foreign: "Passenger", russian: "Пассажир", category: "travel", learned: false },
-    { id: 24, foreign: "Departure", russian: "Вылет / Отправление", category: "travel", learned: false },
-    { id: 25, foreign: "Arrival", russian: "Прибытие", category: "travel", learned: false },
-    { id: 26, foreign: "Schedule", russian: "Расписание", category: "travel", learned: false },
-    { id: 27, foreign: "Currency", russian: "Валюта", category: "travel", learned: false },
-    { id: 28, foreign: "Souvenir", russian: "Сувенир", category: "travel", learned: false },
-    { id: 29, foreign: "Adventure", russian: "Приключение", category: "travel", learned: false },
-    { id: 30, foreign: "Luggage tag", russian: "Багажная бирка", category: "travel", learned: false },
-    { id: 31, foreign: "Boarding pass", russian: "Посадочный талон", category: "travel", learned: false },
-    { id: 32, foreign: "Flight attendant", russian: "Бортпроводник", category: "travel", learned: false },
-    { id: 33, foreign: "Sightseeing", russian: "Осмотр достопримечательностей", category: "travel", learned: false },
-    { id: 34, foreign: "Travel agency", russian: "Турагентство", category: "travel", learned: false },
-    { id: 35, foreign: "Insurance", russian: "Страховка", category: "travel", learned: false },
-    { id: 36, foreign: "Apple", russian: "Яблоко", category: "food", learned: false },
-    { id: 37, foreign: "Dinner", russian: "Ужин", category: "food", learned: false },
-    { id: 38, foreign: "Water", russian: "Вода", category: "food", learned: false },
-    { id: 39, foreign: "Breakfast", russian: "Завтрак", category: "food", learned: false },
-    { id: 40, foreign: "Lunch", russian: "Обед", category: "food", learned: false },
-    { id: 41, foreign: "Bread", russian: "Хлеб", category: "food", learned: false },
-    { id: 42, foreign: "Cheese", russian: "Сыр", category: "food", learned: false },
-    { id: 43, foreign: "Meat", russian: "Мясо", category: "food", learned: false },
-    { id: 44, foreign: "Fish", russian: "Рыба", category: "food", learned: false },
-    { id: 45, foreign: "Vegetable", russian: "Овощ", category: "food", learned: false },
-    { id: 46, foreign: "Fruit", russian: "Фрукт", category: "food", learned: false },
-    { id: 47, foreign: "Sugar", russian: "Сахар", category: "food", learned: false },
-    { id: 48, foreign: "Salt", russian: "Соль", category: "food", learned: false },
-    { id: 49, foreign: "Pepper", russian: "Перец", category: "food", learned: false },
-    { id: 50, foreign: "Milk", russian: "Молоко", category: "food", learned: false },
-    { id: 51, foreign: "Butter", russian: "Сливочное масло", category: "food", learned: false },
-    { id: 52, foreign: "Egg", russian: "Яйцо", category: "food", learned: false },
-    { id: 53, foreign: "Juice", russian: "Сок", category: "food", learned: false },
-    { id: 54, foreign: "Coffee", russian: "Кофе", category: "food", learned: false },
-    { id: 55, foreign: "Tea", russian: "Чай", category: "food", learned: false },
-    { id: 56, foreign: "Soup", russian: "Суп", category: "food", learned: false },
-    { id: 57, foreign: "Salad", russian: "Салат", category: "food", learned: false },
-    { id: 58, foreign: "Cake", russian: "Торт / Пирожное", category: "food", learned: false },
-    { id: 59, foreign: "Dessert", russian: "Десерт", category: "food", learned: false },
-    { id: 60, foreign: "Menu", russian: "Меню", category: "food", learned: false },
-    { id: 61, foreign: "Chef", russian: "Шеф-повар", category: "food", learned: false },
-    { id: 62, foreign: "Waiter", russian: "Официант", category: "food", learned: false },
-    { id: 63, foreign: "Bill", russian: "Счет (в ресторане)", category: "food", learned: false },
-    { id: 64, foreign: "Kitchen", russian: "Кухня", category: "food", learned: false },
-    { id: 65, foreign: "Recipe", russian: "Рецепт", category: "food", learned: false },
-    { id: 66, foreign: "Spices", russian: "Специи", category: "food", learned: false },
-    { id: 67, foreign: "Spoon", russian: "Ложка", category: "food", learned: false },
-    { id: 68, foreign: "Fork", russian: "Вилка", category: "food", learned: false },
-    { id: 69, foreign: "Knife", russian: "Нож", category: "food", learned: false },
-    { id: 70, foreign: "Plate", russian: "Тарелка", category: "food", learned: false },
-    { id: 71, foreign: "Laptop", russian: "Ноутбук", category: "it", learned: false },
-    { id: 72, foreign: "Code", russian: "Код", category: "it", learned: false },
-    { id: 73, foreign: "Website", russian: "Веб-сайт", category: "it", learned: false },
-    { id: 74, foreign: "Computer", russian: "Компьютер", category: "it", learned: false },
-    { id: 75, foreign: "Software", russian: "Программное обеспечение", category: "it", learned: false },
-    { id: 76, foreign: "Hardware", russian: "Железо / Аппаратная часть", category: "it", learned: false },
-    { id: 77, foreign: "Developer", russian: "Разработчик", category: "it", learned: false },
-    { id: 78, foreign: "Programmer", russian: "Программист", category: "it", learned: false },
-    { id: 79, foreign: "Database", russian: "База данных", category: "it", learned: false },
-    { id: 80, foreign: "Server", russian: "Сервер", category: "it", learned: false },
-    { id: 81, foreign: "Network", russian: "Сеть", category: "it", learned: false },
-    { id: 82, foreign: "Application", russian: "Приложение", category: "it", learned: false },
-    { id: 83, foreign: "Framework", russian: "Фреймворк", category: "it", learned: false },
-    { id: 84, foreign: "Library", russian: "Библиотека (кода)", category: "it", learned: false },
-    { id: 85, foreign: "Variable", russian: "Переменная", category: "it", learned: false },
-    { id: 86, foreign: "Function", russian: "Функция", category: "it", learned: false },
-    { id: 87, foreign: "Array", russian: "Массив", category: "it", learned: false },
-    { id: 88, foreign: "Object", russian: "Объект", category: "it", learned: false },
-    { id: 89, foreign: "Bug", russian: "Ошибка / Баг", category: "it", learned: false },
-    { id: 90, foreign: "Feature", russian: "Фича / Особенность", category: "it", learned: false },
-    { id: 91, foreign: "Compiler", russian: "Компилятор", category: "it", learned: false },
-    { id: 92, foreign: "Deployment", russian: "Деплой / Развертывание", category: "it", learned: false },
-    { id: 93, foreign: "Repository", russian: "Репозиторий", category: "it", learned: false },
-    { id: 94, foreign: "Commit", russian: "Коммит / Фиксация", category: "it", learned: false },
-    { id: 95, foreign: "Branch", russian: "Ветка", category: "it", learned: false },
-    { id: 96, foreign: "Merge", russian: "Слияние", category: "it", learned: false },
-    { id: 97, foreign: "Interface", russian: "Интерфейс", category: "it", learned: false },
-    { id: 98, foreign: "User", russian: "Пользователь", category: "it", learned: false },
-    { id: 99, foreign: "Password", russian: "Пароль", category: "it", learned: false },
-    { id: 100, foreign: "Security", russian: "Безопасность", category: "it", learned: false },
-    { id: 101, foreign: "Algorithm", russian: "Алгоритм", category: "it", learned: false },
-    { id: 102, foreign: "Authentication", russian: "Аутентификация", category: "it", learned: false },
-    { id: 103, foreign: "Frontend", russian: "Фронтенд", category: "it", learned: false },
-    { id: 104, foreign: "Backend", russian: "Бэкенд", category: "it", learned: false },
-    { id: 105, foreign: "API", russian: "API / Интерфейс приложений", category: "it", learned: false }
-];
-let savedData = localStorage.getItem('wordlearn_db');
-let wordsDatabase = initialWords;
-
-if (savedData) {
-    let parsed = JSON.parse(savedData);
-    if (parsed.length >= 105) {
-        wordsDatabase = parsed;
-    } else {
-        localStorage.setItem('wordlearn_db', JSON.stringify(initialWords));
-        wordsDatabase = initialWords;
-    }
-} else {
-    localStorage.setItem('wordlearn_db', JSON.stringify(initialWords));
-}
-
-let currentWords = [];
-let currentIndex = 0;
-let timerInterval = null;
-let timeLeft = 10;
-
-const pages = {
-    home: document.getElementById("home-page"),
-    trainer: document.getElementById("trainer-page"),
-    dictionary: document.getElementById("dictionary-page")
-};
-
-const navLinks = {
-    home: document.getElementById("nav-home"),
-    trainer: document.getElementById("nav-trainer"),
-    dictionary: document.getElementById("nav-dictionary")
-};
-
-function saveToStorage() {
-    localStorage.setItem('wordlearn_db', JSON.stringify(wordsDatabase));
-}
-
-let currentTheme = localStorage.getItem('wordlearn_theme') || 'light';
-document.documentElement.setAttribute('data-theme', currentTheme);
-
-document.getElementById("theme-toggle").addEventListener("click", () => {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    localStorage.setItem('wordlearn_theme', currentTheme);
-});
-function speakWord(text) {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
-    }
-}
-
-function updateGlobalStats() {
-    const totalWords = wordsDatabase.length;
-    const totalLearned = wordsDatabase.filter(w => w.learned).length;
-
-    if (document.getElementById("goal-total")) document.getElementById("goal-total").innerText = totalWords;
-    if (document.getElementById("goal-today")) document.getElementById("goal-today").innerText = totalLearned;
-
-    if (document.getElementById("stats-all-words")) document.getElementById("stats-all-words").innerText = totalWords;
-    if (document.getElementById("stats-learned-words")) document.getElementById("stats-learned-words").innerText = totalLearned;
-
-    const tCount = wordsDatabase.filter(w => w.category === 'travel').length;
-    const fCount = wordsDatabase.filter(w => w.category === 'food').length;
-    const iCount = wordsDatabase.filter(w => w.category === 'it').length;
-
-    if (document.getElementById("count-travel")) document.getElementById("count-travel").innerText = `${tCount} слов`;
-    if (document.getElementById("count-food")) document.getElementById("count-food").innerText = `${fCount} слов`;
-    if (document.getElementById("count-it")) document.getElementById("count-it").innerText = `${iCount} слов`;
-}
-
-function switchPage(pageId) {
-    stopTimer();
-    Object.keys(pages).forEach(key => {
-        if (key === pageId) {
-            pages[key].style.display = "flex";
-            navLinks[key].classList.add("active");
-        } else {
-            pages[key].style.display = "none";
-            navLinks[key].classList.remove("active");
-        }
-    });
-
-    if (pageId === 'dictionary') {
-        renderDictionary();
-    }
-    updateGlobalStats();
-}
-function startTraining(category = null, shuffle = false) {
-    let filteredDatabase = [];
-    if (category) {
-        filteredDatabase = wordsDatabase.filter(w => w.category === category);
-    } else {
-        filteredDatabase = [...wordsDatabase];
-    }
-
-    let unlearnedWords = filteredDatabase.filter(w => !w.learned);
-
-    if (unlearnedWords.length === 0) {
-        alert("🎉 Отлично! Все доступные слова в этом режиме уже выучены. Сбрось статистику или добавь новые.");
-        switchPage("home");
-        return;
-    }
-
-    if (shuffle) {
-        unlearnedWords.sort(() => Math.random() - 0.5);
-    }
-
-    currentWords = unlearnedWords.slice(0, 10);
-    currentIndex = 0;
-    switchPage("trainer");
-    updateTrainer();
-}
-
-function updateTrainer() {
-    if (currentWords.length === 0) return;
-
-    const currentWord = currentWords[currentIndex];
-    document.getElementById("word-eng").innerText = currentWord.foreign;
-    document.getElementById("word-rus").innerText = currentWord.russian;
-    document.getElementById("word-rus").style.display = "none";
-
-    const progressPercent = (currentIndex / currentWords.length) * 100;
-    document.getElementById("p-bar").style.width = progressPercent + "%";
-
-    const listElement = document.getElementById("words-list");
-    listElement.innerHTML = "";
-
-    currentWords.forEach((word, index) => {
-        const li = document.createElement("li");
-        if (index < currentIndex) {
-            li.className = "passed";
-            li.innerHTML = `${index + 1}. ${word.foreign} <span class="check">✓</span>`;
-        } else if (index === currentIndex) {
-            li.className = "current";
-            li.innerText = `${index + 1}. ${word.foreign}`;
-        } else {
-            li.className = "upcoming";
-            li.innerText = `${index + 1}. ${word.foreign}`;
-        }
-        listElement.appendChild(li);
-    });
-
-    resetTimer();
-}
-function handleAnswer(isKnown) {
-    if (currentWords.length === 0) return;
-
-    const currentWordInSession = currentWords[currentIndex];
-    const targetWord = wordsDatabase.find(w => w.id === currentWordInSession.id);
-
-    if (targetWord) {
-        targetWord.learned = isKnown;
-        saveToStorage();
-    }
-
-    if (currentIndex < currentWords.length - 1) {
-        currentIndex++;
-        updateTrainer();
-    } else {
-        stopTimer();
-        document.getElementById("p-bar").style.width = "100%";
-        setTimeout(() => {
-            alert("Урок завершен! Отличная работа.");
-            switchPage("home");
-        }, 200);
-    }
-}
-
-function resetTimer() {
-    stopTimer();
-    const isTimerActive = document.getElementById("timer-toggle").checked;
-    const timerDisplay = document.getElementById("timer-display");
-
-    if (!isTimerActive) {
-        timerDisplay.style.display = "none";
-        return;
-    }
-
-    timeLeft = 10;
-    timerDisplay.style.display = "block";
-    timerDisplay.innerText = `${timeLeft}с`;
-
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        timerDisplay.innerText = `${timeLeft}с`;
-        if (timeLeft <= 0) {
-            handleAnswer(false);
-        }
-    }, 1000);
-}
-
-function stopTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-    }
-}
-
-document.getElementById("timer-toggle").addEventListener("change", () => {
-    if (pages.trainer.style.display === "flex") {
-        resetTimer();
-    }
-});
-function renderDictionary() {
-    const searchQuery = document.getElementById("search-input").value.toLowerCase();
-    const activeTagElement = document.querySelector(".tag.active");
-    const activeTag = activeTagElement ? activeTagElement.dataset.tag : "all";
-    const grid = document.getElementById("dictionary-grid");
-
-    grid.innerHTML = "";
-
-    const filtered = wordsDatabase.filter(word => {
-        const matchesSearch = word.foreign.toLowerCase().includes(searchQuery) || word.russian.toLowerCase().includes(searchQuery);
-        const matchesTag = activeTag === "all" || word.category === activeTag;
-        return matchesSearch && matchesTag;
-    });
-
-    filtered.forEach(word => {
-        const row = document.createElement("div");
-        row.className = "dict-row";
-
-        let circleStyle = "";
-        let circleIcon = "";
-
-        if (word.learned) {
-            circleStyle = "background: rgba(16, 185, 129, 0.15); color: #10B981;";
-            circleIcon = "✓";
-        } else {
-            circleStyle = "background: rgba(239, 68, 68, 0.15); color: #EF4444;";
-            circleIcon = "❌";
-        }
-
-        row.innerHTML = `
-            <div class="dict-info">
-                <div class="status-circle" style="${circleStyle}">${circleIcon}</div>
-                <div class="dict-eng">${word.foreign}</div>
-                <div class="dict-rus">— ${word.russian}</div>
-            </div>
-            <div class="dict-actions">
-                <button class="btn-row-speak">🔊</button>
-                <button class="btn-row-delete">&times;</button>
-            </div>
-        `;
-
-        row.querySelector(".status-circle").addEventListener("click", (e) => {
-            e.stopPropagation();
-            word.learned = !word.learned;
-            saveToStorage();
-            renderDictionary();
-            updateGlobalStats();
-        });
-
-        row.querySelector(".btn-row-speak").addEventListener("click", (e) => {
-            e.stopPropagation();
-            speakWord(word.foreign);
-        });
-
-        row.querySelector(".btn-row-delete").addEventListener("click", (e) => {
-            e.stopPropagation();
-            if (confirm(`Удалить слово "${word.foreign}"?`)) {
-                wordsDatabase = wordsDatabase.filter(w => w.id !== word.id);
-                saveToStorage();
-                renderDictionary();
-                updateGlobalStats();
-            }
-        });
-
-        grid.appendChild(row);
-    });
-
-    updateGlobalStats();
-}
-const aboutModal = document.getElementById("about-modal");
-document.getElementById("logo-btn").addEventListener("click", () => { aboutModal.style.display = "flex"; });
-document.getElementById("close-modal-btn").addEventListener("click", () => { aboutModal.style.display = "none"; });
-
-const addModal = document.getElementById("add-word-modal");
-document.getElementById("open-add-modal-btn").addEventListener("click", () => { addModal.style.display = "flex"; });
-document.getElementById("close-add-modal-btn").addEventListener("click", () => { addModal.style.display = "none"; });
-
-window.addEventListener("click", (e) => {
-    if (e.target === aboutModal) aboutModal.style.display = "none";
-    if (e.target === addModal) addModal.style.display = "none";
-});
-
-document.getElementById("add-word-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const foreign = document.getElementById("new-foreign").value.trim();
-    const russian = document.getElementById("new-russian").value.trim();
-    const category = document.getElementById("new-category").value;
-
-    const newWord = {
-        id: Date.now(),
-        foreign: foreign,
-        russian: russian,
-        category: category,
-        learned: false
-    };
-
-    wordsDatabase.push(newWord);
-    saveToStorage();
-    document.getElementById("add-word-form").reset();
-    addModal.style.display = "none";
-    renderDictionary();
-    updateGlobalStats();
-});
-
-document.getElementById("reset-db-btn").addEventListener("click", () => {
-    if (confirm("Вы уверены, что хотите сбросить весь прогресс и кастомные слова?")) {
-        localStorage.removeItem('wordlearn_db');
-        wordsDatabase = JSON.parse(JSON.stringify(initialWords));
-        saveToStorage();
-        aboutModal.style.display = "none";
-        updateGlobalStats();
-        alert("Прогресс успешно сброшен к начальным настройкам.");
-    }
-});
-document.getElementById("card").addEventListener("click", () => {
-    const rus = document.getElementById("word-rus");
-    rus.style.display = rus.style.display === "none" ? "block" : "none";
-});
-
-document.getElementById("speak-btn").addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (currentWords.length > 0) {
-        speakWord(currentWords[currentIndex].foreign);
-    }
-});
-
-document.getElementById("know-btn").addEventListener("click", () => handleAnswer(true));
-document.getElementById("dont-know-btn").addEventListener("click", () => handleAnswer(false));
-
-document.getElementById("start-learning-btn").addEventListener("click", () => {
-    startTraining();
-});
-
-document.getElementById("mix-learning-btn").addEventListener("click", () => {
-    startTraining(null, true);
-});
-
-navLinks.home.addEventListener("click", (e) => {
-    e.preventDefault();
-    switchPage("home");
-});
-
-navLinks.trainer.addEventListener("click", (e) => {
-    e.preventDefault();
-    startTraining();
-});
-
-navLinks.dictionary.addEventListener("click", (e) => {
-    e.preventDefault();
-    switchPage("dictionary");
-});
-
-document.querySelectorAll(".category-card").forEach((card) => {
-    card.addEventListener("click", () => {
-        startTraining(card.dataset.category);
-    });
-});
-
-document.getElementById("search-input").addEventListener("input", renderDictionary);
-
-document.querySelectorAll(".tag").forEach((tag) => {
-    tag.addEventListener("click", () => {
-        document.querySelectorAll(".tag").forEach((t) => t.classList.remove("active"));
-        tag.classList.add("active");
-        renderDictionary();
-    });
-});
-
-updateGlobalStats();
-switchPage("home");
+    { id: 1, foreign: "Ticket", russian: "Билет", category: "travel", learned: false, sentence: "I bought a train ticket to London." },
+    { id: 2, foreign: "Airport", russian: "Аэропорт", category: "travel", learned: false, sentence: "The plane landed safely at the airport." },
+    { id: 3, foreign: "Hotel", russian: "Отель", category: "travel", learned: false, sentence: "We booked a room at a five-star hotel." },
+    { id: 4, foreign: "Passport", russian: "Паспорт", category: "travel", learned: false, sentence: "Don't forget to pack your passport." },
+    { id: 5, foreign: "Luggage", russian: "Багаж", category: "travel", learned: false, sentence: "The airline lost my luggage." },
+    { id: 6, foreign: "Flight", russian: "Рейс / Полет", category: "travel", learned: false, sentence: "Our flight was delayed by two hours." },
+    { id: 7, foreign: "Train", russian: "Поезд", category: "travel", learned: false, sentence: "The train departs from platform four." },
+    { id: 8, foreign: "Beach", russian: "Пляж", category: "travel", learned: false, sentence: "We spent the whole day on the sunny beach." },
+    { id: 9, foreign: "Map", russian: "Карта", category: "travel", learned: false, sentence: "Let's check the map to find the route." },
+    { id: 10, foreign: "Guide", russian: "Гид / Экскурсовод", category: "travel", learned: false, sentence: "The tour guide told us historical facts." },
+    { id: 11, foreign: "Journey", russian: "Путешествие", category: "travel", learned: false, sentence: "Life is a beautiful journey." },
+    { id: 12, foreign: "Island", russian: "Остров", category: "travel", learned: false, sentence: "They traveled to a tropical island." },
+    { id: 13, foreign: "Route", russian: "Маршрут", category: "travel", learned: false, sentence: "This is the shortest route to the city." },
+    { id: 14, foreign: "Border", russian: "Граница", category: "travel", learned: false, sentence: "We crossed the border in the morning." },
+    { id: 15, foreign: "Customs", russian: "Таможня", category: "travel", learned: false, sentence: "We had to go through customs at the airport." },
+    { id: 16, foreign: "Suitcase", russian: "Чемодан", category: "travel", learned: false, sentence: "My suitcase is too heavy to lift." },
+    { id: 17, foreign: "Visa", russian: "Виза", category: "travel", learned: false, sentence: "He applied for a tourist visa." },
+    { id: 18, foreign: "Cruise", russian: "Круиз", category: "travel", learned: false, sentence: "They went on a luxury Mediterranean cruise." },
+    { id: 19, foreign: "Excursion", russian: "Экскурсия", category: "travel", learned: false, sentence: "Tomorrow we have an excursion to the museum." },
+    { id: 20, foreign: "Resort", russian: "Курорт", category: "travel", learned: false, sentence: "This seaside resort is perfect for families." },
+    { id: 21, foreign: "Booking", russian: "Бронирование", category: "travel", learned: false, sentence: "I received a confirmation for my booking." },
+    { id: 22, foreign: "Destination", russian: "Направление", category: "travel", learned: false, sentence: "Paris is a popular travel destination." },
+    { id: 23, foreign: "Passenger", russian: "Пассажир", category: "travel", learned: false, sentence: "The passenger boarded the bus." },
+    { id: 24, foreign: "Departure", russian: "Вылет / Отправление", category: "travel", learned: false, sentence: "Check the screen for departure times." },
+    { id: 25, foreign: "Arrival", russian: "Прибытие", category: "travel", learned: false, sentence: "We waited for his arrival at the station." },
+    { id: 26, foreign: "Schedule", russian: "Расписание", category: "travel", learned: false, sentence: "The train schedule has changed recently." },
+    { id: 27, foreign: "Currency", russian: "Валюта", category: "travel", learned: false, sentence: "You need to exchange your local currency." },
+    { id: 28, foreign: "Souvenir", russian: "Сувенир", category: "travel", learned: false, sentence: "I bought a small souvenir from Italy." },
+    { id: 29, foreign: "Adventure", russian: "Приключение", category: "travel", learned: false, sentence: "Hiking in the mountains is a great adventure." },
+    { id: 30, foreign: "Luggage tag", russian: "Багажная бирка", category: "travel", learned: false, sentence: "Write your name on the luggage tag." },
+    { id: 31, foreign: "Boarding pass", russian: "Посадочный талон", category: "travel", learned: false, sentence: "Please show your boarding pass here." },
+    { id: 32, foreign: "Flight attendant", russian: "Бортпроводник", category: "travel", learned: false, sentence: "The flight attendant served drinks." },
+    { id: 33, foreign: "Sightseeing", russian: "Осмотр достопримечательностей", category: "travel", learned: false, sentence: "We did some sightseeing in London." },
+    { id: 34, foreign: "Travel agency", russian: "Турагентство", category: "travel", learned: false, sentence: "The travel agency planned our whole trip." },
+    { id: 35, foreign: "Insurance", russian: "Страховка", category: "travel", learned: false, sentence: "Medical insurance is necessary for travel." },
+    { id: 36, foreign: "Apple", russian: "Яблоко", category: "food", learned: false, sentence: "An apple a day keeps the doctor away." },
+    { id: 37, foreign: "Dinner", russian: "Ужин", category: "food", learned: false, sentence: "We had a delicious fish dinner." },
+    { id: 38, foreign: "Water", russian: "Вода", category: "food", learned: false, sentence: "He drank a whole bottle of fresh water." },
+    { id: 39, foreign: "Breakfast", russian: "Завтрак", category: "food", learned: false, sentence: "Breakfast is the most important meal." },
+    { id: 40, foreign: "Lunch", russian: "Обед", category: "food", learned: false, sentence: "Let's meet for lunch at one o'clock." },
+    { id: 41, foreign: "Bread", russian: "Хлеб", category: "food", learned: false, sentence: "She bought a fresh loaf of white bread." },
+    { id: 42, foreign: "Cheese", russian: "Сыр", category: "food", learned: false, sentence: "This French cheese tastes incredible." },
+    { id: 43, foreign: "Meat", russian: "Мясо", category: "food", learned: false, sentence: "He prefers vegetables over red meat." },
+    { id: 44, foreign: "Fish", russian: "Рыба", category: "food", learned: false, sentence: "The cat loves eating fresh fish." },
+    { id: 45, foreign: "Vegetable", russian: "Овощ", category: "food", learned: false, sentence: "Carrot is a healthy orange vegetable." },
+    { id: 46, foreign: "Fruit", russian: "Фрукт", category: "food", learned: false, sentence: "Mango is my absolute favorite fruit." },
+    { id: 47, foreign: "Sugar", russian: "Сахар", category: "food", learned: false, sentence: "Do you add sugar to your hot coffee?" },
+    { id: 48, foreign: "Salt", russian: "Соль", category: "food", learned: false, sentence: "The soup needs a little bit more salt." },
+    { id: 49, foreign: "Pepper", russian: "Перец", category: "food", learned: false, sentence: "Black pepper adds a good flavor." },
+    { id: 50, foreign: "Milk", russian: "Молоко", category: "food", learned: false, sentence: "Pour some cold milk into the cereal." },
+    { id: 51, foreign: "Butter", russian: "Сливочное масло", category: "food", learned: false, sentence: "Spread some soft butter on the toast." },
+    { id: 52, foreign: "Egg", russian: "Яйцо", category: "food", learned: false, sentence: "He fried an egg for his breakfast." },
+    { id: 53, foreign: "Juice", russian: "Сок", category: "food", learned: false, sentence: "Fresh orange juice is very refreshing." },
+    { id: 54, foreign: "Coffee", russian: "Кофе", category: "food", learned: false, sentence: "I cannot start my day without black coffee." },
+    { id: 55, foreign: "Tea", russian: "Чай", category: "food", learned: false, sentence: "She loves drinking hot green tea with lemon." },
+    { id: 56, foreign: "Soup", russian: "Суп", category: "food", learned: false, sentence: "The hot chicken soup smelled delicious." },
+    { id: 57, foreign: "Salad", russian: "Салат", category: "food", learned: false, sentence: "We ordered a fresh Greek salad." },
+    { id: 58, foreign: "Cake", russian: "Торт / Пирожное", category: "food", learned: false, sentence: "She baked a chocolate birthday cake." },
+    { id: 59, foreign: "Dessert", russian: "Десерт", category: "food", learned: false, sentence: "Ice cream is the best summer dessert." },
+    { id: 60, foreign: "Menu", russian: "Меню", category: "food", learned: false, sentence: "The waiter handed us the dinner menu." },
+    { id: 61, foreign: "Chef", russian: "Шеф-повар", category: "food", learned: false, sentence: "The talented chef prepared an amazing meal." },
+    { id: 62, foreign: "Waiter", russian: "Официант", category: "food", learned: false, sentence: "The friendly waiter took our order quickly." },
+    { id: 63, foreign: "Bill", russian: "Счет (в ресторане)", category: "food", learned: false, sentence: "Could we please have the bill, sir?" },
+    { id: 64, foreign: "Kitchen", russian: "Кухня", category: "food", learned: false, sentence: "The restaurant has a modern spacious kitchen." },
+    { id: 65, foreign: "Recipe", russian: "Рецепт", category: "food", learned: false, sentence: "Follow this simple recipe to bake bread." },
+    { id: 66, foreign: "Spices", russian: "Специи", category: "food", learned: false, sentence: "Indian food uses many traditional spices." },
+    { id: 67, foreign: "Spoon", russian: "Ложка", category: "food", learned: false, sentence: "Eat your warm soup with a soup spoon." },
+    { id: 68, foreign: "Fork", russian: "Вилка", category: "food", learned: false, sentence: "He used a fork to eat his salad." },
+    { id: 69, foreign: "Knife", russian: "Нож", category: "food", learned: false, sentence: "Be careful because that steak knife is sharp." },
+    { id: 51, foreign: "Butter", russian: "Сливочное масло", category: "food", learned: false, sentence: "Spread some soft butter on the toast.", sentenceRus: "Намажь немного мягкого сливочного масла на тост." },{ id: 52, foreign: "Egg", russian: "Яйцо", category: "food", learned: false, sentence: "He fried an egg for his breakfast.", sentenceRus: "Он пожарил яйцо на завтрак." },{ id: 53, foreign: "Juice", russian: "Сок", category: "food", learned: false, sentence: "Fresh orange juice is very refreshing.", sentenceRus: "Свежий апельсиновый сок очень освежает." },{ id: 54, foreign: "Coffee", russian: "Кофе", category: "food", learned: false, sentence: "I cannot start my day without black coffee.", sentenceRus: "Я не могу начать день без черного кофе." },{ id: 55, foreign: "Tea", russian: "Чай", category: "food", learned: false, sentence: "She loves drinking hot green tea with lemon.", sentenceRus: "Она обожает пить горячий зеленый чай с лимоном." },{ id: 56, foreign: "Soup", russian: "Суп", category: "food", learned: false, sentence: "The hot chicken soup smelled delicious.", sentenceRus: "Горячий куриный суп пахнет очень вкусно." },{ id: 57, foreign: "Salad", russian: "Салат", category: "food", learned: false, sentence: "We ordered a fresh Greek salad.", sentenceRus: "Мы заказали свежий греческий салат." },{ id: 58, foreign: "Cake", russian: "Торт / Пирожное", category: "food", learned: false, sentence: "She baked a chocolate birthday cake.", sentenceRus: "Она испекла шоколадный праздничный торт." },{ id: 59, foreign: "Dessert", russian: "Десерт", category: "food", learned: false, sentence: "Ice cream is the best summer dessert.", sentenceRus: "Мороженое — лучший летний десерт." },{ id: 60, foreign: "Menu", russian: "Меню", category: "food", learned: false, sentence: "The waiter handed us the dinner menu.", sentenceRus: "Официант передал нам меню ужина." },{ id: 61, foreign: "Chef", russian: "Шеф-повар", category: "food", learned: false, sentence: "The talented chef prepared an amazing meal.", sentenceRus: "Талантливый шеф-повар приготовил потрясающее блюдо." },{ id: 62, foreign: "Waiter", russian: "Официант", category: "food", learned: false, sentence: "The friendly waiter took our order quickly.", sentenceRus: "Дружелюбный официант быстро принял наш заказ." },{ id: 63, foreign: "Bill", russian: "Счет (в ресторане)", category: "food", learned: false, sentence: "Could we please have the bill, sir?", sentenceRus: "Можно нам счет, сэр?" },{ id: 64, foreign: "Kitchen", russian: "Кухня", category: "food", learned: false, sentence: "The restaurant has a modern spacious kitchen.", sentenceRus: "В ресторане современная просторная кухня." },{ id: 65, foreign: "Recipe", russian: "Рецепт", category: "food", learned: false, sentence: "Follow this simple recipe to bake bread.", sentenceRus: "Следуйте этому простому рецепту, чтобы испечь хлеб." },{ id: 66, foreign: "Spices", russian: "Специи", category: "food", learned: false, sentence: "Indian food uses many traditional spices.", sentenceRus: "В индийской кухне используется много традиционных специй." },{ id: 67, foreign: "Spoon", russian: "Ложка", category: "food", learned: false, sentence: "Eat your warm soup with a soup spoon.", sentenceRus: "Ешьте теплый суп суповой ложкой." },{ id: 68, foreign: "Fork", russian: "Вилка", category: "food", learned: false, sentence: "He used a fork to eat his salad.", sentenceRus: "Он использовал вилку, чтобы есть салат." },{ id: 69, foreign: "Knife", russian: "Нож", category: "food", learned: false, sentence: "Be careful because that steak knife is sharp.", sentenceRus: "Будьте осторожны, этот нож для стейка очень острый." },{ id: 70, foreign: "Plate", russian: "Тарелка", category: "food", learned: false, sentence: "She put the hot food on a clean plate.", sentenceRus: "Она положила горячую еду на чистую тарелку." },{ id: 71, foreign: "Laptop", russian: "Ноутбук", category: "it", learned: false, sentence: "He closed his laptop after finishing work.", sentenceRus: "Он закрыл свой ноутбук после завершения работы." },{ id: 72, foreign: "Code", russian: "Код", category: "it", learned: false, sentence: "She wrote code for the new web application.", sentenceRus: "Она написала код для нового веб-приложения." },{ id: 73, foreign: "Website", russian: "Веб-сайт", category: "it", learned: false, sentence: "Our company launched a modern official website.", sentenceRus: "Наша компания запустила современный официальный сайт." },{ id: 74, foreign: "Computer", russian: "Компьютер", category: "it", learned: false, sentence: "The personal computer needs a hardware upgrade.", sentenceRus: "Персональному компьютеру требуется обновление железа." },{ id: 75, foreign: "Software", russian: "Программное обеспечение", category: "it", learned: false, sentence: "Install the latest software update immediately.", sentenceRus: "Немедленно установите последнее обновление ПО." },{ id: 76, foreign: "Hardware", russian: "Железо / Аппаратная часть", category: "it", learned: false, sentence: "Computer hardware includes the CPU and RAM.", sentenceRus: "Компьютерное железо включает в себя процессор и ОЗУ." },{ id: 77, foreign: "Developer", russian: "Разработчик", category: "it", learned: false, sentence: "The lead developer assigned the tasks today.", sentenceRus: "Ведущий разработчик распределил задачи на сегодня." },{ id: 78, foreign: "Programmer", russian: "Программист", category: "it", learned: false, sentence: "He works as a senior JavaScript programmer.", sentenceRus: "Он работает старшим JavaScript-программистом." },{ id: 79, foreign: "Database", russian: "База данных", category: "it", learned: false, sentence: "User profiles are stored in the SQL database.", sentenceRus: "Профили пользователей хранятся в базе данных SQL." },{ id: 80, foreign: "Server", russian: "Сервер", category: "it", learned: false, sentence: "The remote server crashed due to high traffic.", sentenceRus: "Удаленный сервер упал из-за высокого трафика." },{ id: 81, foreign: "Network", russian: "Сеть", category: "it", learned: false, sentence: "Connect your device to the local office network.", sentenceRus: "Подключите устройство к локальной сети офиса." },{ id: 82, foreign: "Application", russian: "Приложение", category: "it", learned: false, sentence: "Download our official mobile application now.", sentenceRus: "Скачайте наше официальное мобильное приложение прямо сейчас." },{ id: 83, foreign: "Framework", russian: "Фреймворк", category: "it", learned: false, sentence: "React is a popular web frontend framework.", sentenceRus: "React — популярный веб-фреймворк для фронтенда." },{ id: 84, foreign: "Library", russian: "Библиотека (кода)", category: "it", learned: false, sentence: "This open-source library simplifies chart creation.", sentenceRus: "Эта библиотека с открытым исходным кодом упрощает создание графиков." },{ id: 85, foreign: "Variable", russian: "Переменная", category: "it", learned: false, sentence: "Declare a global variable to store the count.", sentenceRus: "Объявите глобальную переменную для хранения счетчика." },{ id: 86, foreign: "Function", russian: "Функция", category: "it", learned: false, sentence: "This custom function returns a random number.", sentenceRus: "Эта кастомная функция возвращает случайное число." },{ id: 87, foreign: "Array", russian: "Массив", category: "it", learned: false, sentence: "The array contains a list of word objects.", sentenceRus: "Массив содержит список объектов слов." },{ id: 88, foreign: "Object", russian: "Объект", category: "it", learned: false, sentence: "JavaScript objects hold key-value pairs.", sentenceRus: "Объекты JavaScript хранят пары ключ-значение." },{ id: 89, foreign: "Bug", russian: "Ошибка / Баг", category: "it", learned: false, sentence: "The QA team discovered a major UI bug.", sentenceRus: "Команда тестирования обнаружила серьезный баг интерфейса." },{ id: 90, foreign: "Feature", russian: "Фича / Особенность", category: "it", learned: false, sentence: "Dark mode is the most requested design feature.", sentenceRus: "Темная тема — самая запрашиваемая фича в дизайне." },{ id: 91, foreign: "Compiler", russian: "Компилятор", category: "it", learned: false, sentence: "The compiler translates source code into machine code.", sentenceRus: "Компилятор переводит исходный код в машинный код." },{ id: 92, foreign: "Deployment", russian: "Деплой / Развертывание", category: "it", learned: false, sentence: "The production deployment took thirty minutes yesterday.", sentenceRus: "Вчера деплой на прод занял тридцать минут." },{ id: 93, foreign: "Repository", russian: "Репозиторий", category: "it", learned: false, sentence: "Push your recent commits to the remote repository.", sentenceRus: "Отправьте ваши последние коммиты в удаленный репозиторий." },{ id: 94, foreign: "Commit", russian: "Коммит / Фиксация", category: "it", learned: false, sentence: "Write a descriptive message for every git commit.", sentenceRus: "Пишите понятные сообщения для каждого коммита в git." },{ id: 95, foreign: "Branch", russian: "Ветка", category: "it", learned: false, sentence: "Create a separate branch for testing features.", sentenceRus: "Создайте отдельную ветку для тестирования фич." },{ id: 96, foreign: "Merge", russian: "Слияние", category: "it", learned: false, sentence: "Merge the feature branch into main safely.", sentenceRus: "Безопасно слейте ветку фичи в main." },{ id: 97, foreign: "Interface", russian: "Интерфейс", category: "it", learned: false, sentence: "The user interface should be simple and intuitive.", sentenceRus: "Пользовательский интерфейс должен быть простым и интуитивным." },{ id: 98, foreign: "User", russian: "Пользователь", category: "it", learned: false, sentence: "The active user logged out of the system.", sentenceRus: "Активный пользователь вышел из системы." },{ id: 99, foreign: "Password", russian: "Пароль", category: "it", learned: false, sentence: "Choose a strong password containing special characters.", sentenceRus: "Выберите надежный пароль, содержащий специальные символы." },{ id: 100, foreign: "Security", russian: "Безопасность", category: "it", learned: false, sentence: "Cyber security protects against online threats.", sentenceRus: "Кибербезопасность защищает от онлайн-угроз." },{ id: 101, foreign: "Algorithm", russian: "Алгоритм", category: "it", learned: false, sentence: "The search algorithm sorts data very efficiently.", sentenceRus: "Алгоритм поиска сортирует данные очень эффективно." },{ id: 102, foreign: "Authentication", russian: "Аутентификация", category: "it", learned: false, sentence: "Two-factor authentication secures your account.", sentenceRus: "Двухфакторная аутентификация защищает ваш аккаунт." },{ id: 103, foreign: "Frontend", russian: "Фронтенд", category: "it", learned: false, sentence: "The frontend developer styles the web pages.", sentenceRus: "Фронтенд-разработчик стилизует веб-страницы." },{ id: 104, foreign: "Backend", russian: "Бэкенд", category: "it", learned: false, sentence: "The backend server handles database management operations.", sentenceRus: "Бэкенд-сервер обрабатывает операции по управлению базами данных." },{ id: 105, foreign: "API", russian: "API / Интерфейс приложений", category: "it", learned: false, sentence: "The weather service provides a free public API.", sentenceRus: "Сервис погоды предоставляет бесплатный публичный API." }];let savedData = localStorage.getItem('wordlearn_db');let wordsDatabase = initialWords;if (savedData) {let parsed = JSON.parse(savedData);if (parsed.length >= 105) {wordsDatabase = parsed;} else {localStorage.setItem('wordlearn_db', JSON.stringify(initialWords));wordsDatabase = initialWords;}} else {localStorage.setItem('wordlearn_db', JSON.stringify(initialWords));}let currentWords = [];let currentIndex = 0;let timerInterval = null;let timeLeft = 10;const pages = {home: document.getElementById("home-page"),trainer: document.getElementById("trainer-page"),dictionary: document.getElementById("dictionary-page")};const navLinks = {home: document.getElementById("nav-home"),trainer: document.getElementById("nav-trainer"),dictionary: document.getElementById("nav-dictionary")};function saveToStorage() {localStorage.setItem('wordlearn_db', JSON.stringify(wordsDatabase));}let currentTheme = localStorage.getItem('wordlearn_theme') || 'light';document.documentElement.setAttribute('data-theme', currentTheme);document.getElementById("theme-toggle").addEventListener("click", () => {currentTheme = currentTheme === 'light' ? 'dark' : 'light';document.documentElement.setAttribute('data-theme', currentTheme);localStorage.setItem('wordlearn_theme', currentTheme);});function speakWord(text) {if ('speechSynthesis' in window) {window.speechSynthesis.cancel();const utterance = new SpeechSynthesisUtterance(text);utterance.lang = 'en-US';utterance.rate = 0.9;window.speechSynthesis.speak(utterance);}}function updateGlobalStats() {const totalWords = wordsDatabase.length;const totalLearned = wordsDatabase.filter(w => w.learned).length;if (document.getElementById("goal-total")) document.getElementById("goal-total").innerText = totalWords;if (document.getElementById("goal-today")) document.getElementById("goal-today").innerText = totalLearned;if (document.getElementById("stats-all-words")) document.getElementById("stats-all-words").innerText = totalWords;if (document.getElementById("stats-learned-words")) document.getElementById("stats-learned-words").innerText = totalLearned;const tCount = wordsDatabase.filter(w => w.category === 'travel').length;const fCount = wordsDatabase.filter(w => w.category === 'food').length;const iCount = wordsDatabase.filter(w => w.category === 'it').length;if (document.getElementById("count-travel")) document.getElementById("count-travel").innerText = ${tCount} слов;if (document.getElementById("count-food")) document.getElementById("count-food").innerText = ${fCount} слов;if (document.getElementById("count-it")) document.getElementById("count-it").innerText = ${iCount} слов;}function switchPage(pageId) {stopTimer();Object.keys(pages).forEach(key => {if (key === pageId) {pages[key].style.display = "flex";navLinks[key].classList.add("active");} else {pages[key].style.display = "none";navLinks[key].classList.remove("active");}});if (pageId === 'dictionary') {renderDictionary();}updateGlobalStats();}function startTraining(category = null, shuffle = false) {let filteredDatabase = [];if (category) {filteredDatabase = wordsDatabase.filter(w => w.category === category);} else {filteredDatabase = [...wordsDatabase];}let unlearnedWords = filteredDatabase.filter(w => !w.learned);if (unlearnedWords.length === 0) {alert("🎉 Отлично! Все доступные слова в этом режиме уже выучены. Сбрось статистику или добавь новые.");switchPage("home");return;}if (shuffle) {unlearnedWords.sort(() => Math.random() - 0.5);}currentWords = unlearnedWords.slice(0, 10);currentIndex = 0;switchPage("trainer");updateTrainer();}function updateTrainer() {if (currentWords.length === 0) return;const currentWord = currentWords[currentIndex];document.getElementById("word-eng").innerText = currentWord.foreign;document.getElementById("word-rus").innerText = currentWord.russian;document.getElementById("word-rus").style.display = "none";const sentenceElement = document.getElementById("word-sentence");if (sentenceElement) {sentenceElement.innerText = currentWord.sentence ? “${currentWord.sentence}” : "";}const sentenceRusElement = document.getElementById("word-sentence-rus");if (sentenceRusElement) {sentenceRusElement.innerText = currentWord.sentenceRus ? currentWord.sentenceRus : "";sentenceRusElement.style.display = "none";}const progressPercent = (currentIndex / currentWords.length) * 100;document.getElementById("p-bar").style.width = progressPercent + "%";const listElement = document.getElementById("words-list");listElement.innerHTML = "";currentWords.forEach((word, index) => {const li = document.createElement("li");if (index < currentIndex) {li.className = "passed";li.innerHTML = ${index + 1}. ${word.foreign} <span class="check">✓</span>;} else if (index === currentIndex) {li.className = "current";li.innerText = ${index + 1}. ${word.foreign};} else {li.className = "upcoming";li.innerText = ${index + 1}. ${word.foreign};}listElement.appendChild(li);});resetTimer();}function handleAnswer(isKnown) {if (currentWords.length === 0) return;const currentWordInSession = currentWords[currentIndex];const targetWord = wordsDatabase.find(w => w.id === currentWordInSession.id);if (targetWord) {targetWord.learned = isKnown;saveToStorage();}if (currentIndex < currentWords.length - 1) {currentIndex++;updateTrainer();} else {stopTimer();document.getElementById("p-bar").style.width = "100%";setTimeout(() => {alert("Урок завершен! Отличная работа.");switchPage("home");}, 200);}}function resetTimer() {stopTimer();const isTimerActive = document.getElementById("timer-toggle").checked;const timerDisplay = document.getElementById("timer-display");if (!isTimerActive) {timerDisplay.style.display = "none";return;}timeLeft = 10;timerDisplay.style.display = "block";timerDisplay.innerText = ${timeLeft}с;timerInterval = setInterval(() => {timeLeft--;timerDisplay.innerText = ${timeLeft}с;if (timeLeft <= 0) {handleAnswer(false);}}, 1000);}function stopTimer() {if (timerInterval) {clearInterval(timerInterval);timerInterval = null;}}document.getElementById("timer-toggle").addEventListener("change", () => {if (pages.trainer.style.display === "flex") {resetTimer();}});function renderDictionary() {const searchQuery = document.getElementById("search-input").value.toLowerCase();const activeTagElement = document.querySelector(".tag.active");const activeTag = activeTagElement ? activeTagElement.dataset.tag : "all";const grid = document.getElementById("dictionary-grid");grid.innerHTML = "";const filtered = wordsDatabase.filter(word => {const matchesSearch = word.foreign.toLowerCase().includes(searchQuery) || word.russian.toLowerCase().includes(searchQuery);const matchesTag = activeTag === "all" || word.category === activeTag;return matchesSearch && matchesTag;});filtered.forEach(word => {const row = document.createElement("div");row.className = "dict-row";let circleStyle = "";let circleIcon = "";if (word.learned) {circleStyle = "background: rgba(16, 185, 129, 0.15); color: #10B981;";circleIcon = "✓";} else {circleStyle = "background: rgba(239, 68, 68, 0.15); color: #EF4444;";circleIcon = "❌";}row.innerHTML = <div class="dict-info"> <div class="status-circle" style="${circleStyle}">${circleIcon}</div> <div class="dict-eng">${word.foreign}</div> <div class="dict-rus">— ${word.russian}</div> </div> <div class="dict-actions"> <button class="btn-row-speak">🔊</button> <button class="btn-row-delete">&times;</button> </div>;row.querySelector(".status-circle").addEventListener("click", (e) => {e.stopPropagation();word.learned = !word.learned;saveToStorage();renderDictionary();updateGlobalStats();});row.querySelector(".btn-row-speak").addEventListener("click", (e) => {e.stopPropagation();speakWord(word.foreign);});row.querySelector(".btn-row-delete").addEventListener("click", (e) => {e.stopPropagation();if (confirm(Удалить слово "${word.foreign}"?)) {wordsDatabase = wordsDatabase.filter(w => w.id !== word.id);saveToStorage();renderDictionary();updateGlobalStats();}});grid.appendChild(row);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
