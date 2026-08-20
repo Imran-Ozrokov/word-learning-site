@@ -487,3 +487,5 @@ body {
         margin-top: 20px;
     }
 }
+
+width: 0;height: 0;border-left: 20px solid transparent;border-right: 20px solid transparent;border-bottom: 35px solid var(--bg-card);transform: rotate(45deg);}.shape-wave-lines {position: absolute;bottom: 30px;left: 20px;display: flex;flex-direction: column;gap: 6px;z-index: 3;}.shape-wave-lines span {display: block;height: 4px;background: #38BDF8;border-radius: 2px;opacity: 0.8;}.shape-wave-lines span:nth-child(1) { width: 40px; }.shape-wave-lines span:nth-child(2) { width: 60px; background: var(--primary); }.shape-wave-lines span:nth-child(3) { width: 50px; }.shape-wave-lines span:nth-child(4) { width: 30px; background: var(--success); }@keyframes floatShape {0% {transform: translateY(0px) rotate(-45deg);}50% {transform: translateY(-12px) rotate(-42deg);}100% {transform: translateY(0px) rotate(-45deg);}}[data-theme="dark"] .shape-overlay-layer {background: rgba(30, 41, 59, 0.4);border: 1px solid rgba(255, 255, 255, 0.1);}
