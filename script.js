@@ -278,7 +278,7 @@ function renderDictionary() {
     grid.innerHTML = "";
     
     const searchQuery = document.getElementById("search-input").value.toLowerCase().trim();
-    const activeTagBtn = document.querySelector(".tag.active");
+    const activeTagBtn = document.querySelector(".tag-premium.active");
     const activeTag = activeTagBtn ? activeTagBtn.getAttribute("data-tag") : "all";
     
     const filtered = wordsDatabase.filter(word => {
@@ -293,7 +293,7 @@ function renderDictionary() {
         
         row.innerHTML = `
             <div class="dict-info">
-                <div class="status-circle-bloom" style="width: 16px; height: 16px; border-radius: 50%; background: ${word.learned ? 'var(--success)' : 'var(--border-color)'}; cursor: pointer;"></div>
+                <div class="status-circle-bloom" style="background: ${word.learned ? 'var(--success)' : 'var(--border-color)'};"></div>
                 <div class="dict-eng">${word.foreign}</div>
                 <div class="dict-rus">${word.russian}</div>
             </div>
@@ -383,9 +383,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     document.getElementById("search-input").addEventListener("input", renderDictionary);
-    document.querySelectorAll(".tag").forEach(tagBtn => {
+    document.querySelectorAll(".tag-premium").forEach(tagBtn => {
         tagBtn.addEventListener("click", () => {
-            document.querySelectorAll(".tag").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".tag-premium").forEach(b => b.classList.remove("active"));
             tagBtn.classList.add("active");
             renderDictionary();
         });
