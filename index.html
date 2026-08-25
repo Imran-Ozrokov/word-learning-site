@@ -8,8 +8,11 @@
 </head>
 <body>
 
+    <div class="glow-bg-orb orb-1"></div>
+    <div class="glow-bg-orb orb-2"></div>
+
     <header class="header">
-        <div class="logo" id="logo-btn" style="cursor: pointer;">Word<span>Learn</span></div>
+        <div class="logo" id="logo-btn">Word<span>Learn</span></div>
         <div class="header-right">
             <button id="theme-toggle" class="btn-theme">🌓 Тема</button>
             <nav class="nav">
@@ -61,81 +64,103 @@
     <div id="home-page" class="page">
         <main class="hero-container">
             <div class="hero-left">
-                <h1>Прокачай свой словарный запас</h1>
-                <p class="subtitle">Изучайте новые иностранные слова каждый день с помощью интерактивных карточек.</p>
+                <h1 class="premium-gradient-title">Прокачай свой словарный запас</h1>
+                <p class="subtitle">Изучайте новые иностранные слова каждый день с помощью интерактивных карточек нового поколения.</p>
                 <div class="main-buttons">
                     <button class="btn-start" id="start-learning-btn">Начать учить</button>
                     <button class="btn-start btn-mix" id="mix-learning-btn">🎰 Случайный микс</button>
                 </div>
                 
-                <div class="categories-row">
+                <div class="categories-column-layout">
                     <div class="category-card" data-category="travel">
-                        <h4>🇬🇧 Путешествия</h4>
-                        <p id="count-travel">0 слов</p>
+                        <div class="category-card-glow"></div>
+                        <div class="category-icon">🇬🇧</div>
+                        <div class="category-meta">
+                            <h4>Путешествия</h4>
+                            <p id="count-travel">0 слов</p>
+                        </div>
                     </div>
                     <div class="category-card" data-category="food">
-                        <h4>🍔 Еда и рестораны</h4>
-                        <p id="count-food">0 слов</p>
+                        <div class="category-card-glow"></div>
+                        <div class="category-icon">🍔</div>
+                        <div class="category-meta">
+                            <h4>Еда и рестораны</h4>
+                            <p id="count-food">0 слов</p>
+                        </div>
                     </div>
                     <div class="category-card" data-category="it">
-                        <h4>💻 IT и Работа</h4>
-                        <p id="count-it">0 слов</p>
+                        <div class="category-card-glow"></div>
+                        <div class="category-icon">💻</div>
+                        <div class="category-meta">
+                            <h4>IT и Работа</h4>
+                            <p id="count-it">0 слов</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="hero-right">
-                <div class="geometric-art">
-                    <div class="geo-circle-bg"></div>
-                    <div class="geo-half-circle"></div>
-                    <div class="geo-triangle"></div>
-                    <div class="geo-waves">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                <div class="geometric-art-wrapper">
+                    <div class="geometric-art">
+                        <div class="geo-circle-bg"></div>
+                        <div class="geo-half-circle"></div>
+                        <div class="geo-triangle"></div>
+                        <div class="geo-waves">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
                     </div>
                 </div>
-                <div class="goal-widget">
+                <div class="goal-widget-glass">
                     <h3>Дневная цель</h3>
-                    <div class="goal-number" id="goal-total">0</div>
-                    <p class="goal-sub">Слов всего</p>
-                    <div class="goal-number green" id="goal-today">0</div>
-                    <p class="goal-sub">Выучено слов</p>
+                    <div class="goal-stats-row">
+                        <div>
+                            <div class="goal-number" id="goal-total">0</div>
+                            <p class="goal-sub">Слов всего</p>
+                        </div>
+                        <div class="goal-divider-line"></div>
+                        <div>
+                            <div class="goal-number green" id="goal-today">0</div>
+                            <p class="goal-sub">Выучено слов</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
     <div id="trainer-page" class="page" style="display: none;">
-        <main class="trainer-container">
+        <main class="trainer-container-premium">
             <div class="trainer-top-row">
                 <div class="trainer-progress-wrapper">
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" id="p-bar"></div>
+                    <div class="progress-bar-container-glow">
+                        <div class="progress-bar-fill-neon" id="p-bar"></div>
                     </div>
                 </div>
-                <button class="btn-back-home" id="btn-leave-trainer">← На главную</button>
+                <button class="btn-back-home-premium" id="btn-leave-trainer">← На главную</button>
             </div>
 
-            <section class="lesson-zone">
-                <h1 id="lesson-title" class="lesson-main-heading">Урок №1: Первое знакомство</h1>
-                <p class="lesson-subheading">Вы на пути к расширению словарного запаса.</p>
-                <div id="timer-display" class="timer-badge" style="display: none;">10с</div>
+            <section class="lesson-zone-premium">
+                <h1 id="lesson-title" class="lesson-main-heading-premium">Урок: Обучение</h1>
+                <p class="lesson-subheading-premium">Нажмите на карточку, чтобы проверить перевод</p>
+                <div id="timer-display" class="timer-badge-neon" style="display: none;">10с</div>
 
-                <div class="word-card-bloom" id="card">
-                    <button id="speak-btn" class="speak-btn-bloom" title="Прослушать">🔊</button>
-                    <h1 id="word-eng" class="word-foreign-text">Загрузка...</h1>
-                    <p id="word-rus" class="word-translation-text" style="display: none;">Загрузка...</p>
-                    <p id="word-sentence" class="word-example-text"></p>
+                <div class="word-card-cinematic" id="card">
+                    <button id="speak-btn" class="speak-btn-cinematic" title="Прослушать">🔊</button>
+                    <h1 id="word-eng" class="word-foreign-premium">Загрузка...</h1>
+                    <p id="word-rus" class="word-translation-premium" style="display: none;">Загрузка...</p>
+                    <p id="word-sentence" class="word-example-premium"></p>
                 </div>
 
-                <div class="trainer-actions-row">
-                    <button class="btn-bloom btn-bloom-dont" id="dont-know-btn">Не знаю</button>
-                    <button class="btn-bloom btn-bloom-know" id="know-btn">Знаю</button>
+                <div class="trainer-actions-row-premium">
+                    <button class="btn-premium-action btn-dont" id="dont-know-btn">Не знаю</button>
+                    <button class="btn-premium-action btn-know" id="know-btn">Знаю</button>
                 </div>
                 
-                <div class="trainer-settings">
-                    <label class="switch-label">
+                <div class="trainer-settings-premium">
+                    <label class="switch-label-premium">
                         <input type="checkbox" id="timer-toggle"> ⚡ Режим с таймером (10 сек)
                     </label>
                 </div>
@@ -145,28 +170,28 @@
 
     <div id="dictionary-page" class="page" style="display: none;">
         <main class="container">
-            <div class="dictionary-left">
+            <div class="dictionary-left-premium">
                 <div class="dictionary-header-row">
                     <h2>Мой словарь</h2>
-                    <button id="open-add-modal-btn" class="btn-add-word">➕ Добавить слово</button>
+                    <button id="open-add-modal-btn" class="btn-add-word-premium">➕ Добавить слово</button>
                 </div>
                 
-                <div class="search-container">
+                <div class="search-container-premium">
                     <input type="text" id="search-input" placeholder="🔍 Найти слово по словарю...">
                 </div>
 
-                <div class="tags-container">
-                    <button class="tag active" data-tag="all">Все слова</button>
-                    <button class="tag" data-tag="travel">Путешествия</button>
-                    <button class="tag" data-tag="food">Еда</button>
-                    <button class="tag" data-tag="it">IT и Работа</button>
+                <div class="tags-container-premium">
+                    <button class="tag-premium active" data-tag="all">Все слова</button>
+                    <button class="tag-premium" data-tag="travel">Путешествия</button>
+                    <button class="tag-premium" data-tag="food">Еда</button>
+                    <button class="tag-premium" data-tag="it">IT и Работа</button>
                 </div>
 
-                <div class="words-grid" id="dictionary-grid"></div>
+                <div class="words-grid-premium" id="dictionary-grid"></div>
             </div>
 
-            <div class="dictionary-right">
-                <div class="stats-widget">
+            <div class="dictionary-right-premium">
+                <div class="stats-widget-glass">
                     <h3>Статистика</h3>
                     <div class="stats-num" id="stats-all-words">0</div>
                     <p class="stats-label">Всего слов в словаре</p>
