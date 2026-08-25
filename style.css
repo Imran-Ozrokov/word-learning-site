@@ -1011,3 +1011,107 @@ body {
         max-width: 100%;
     }
 }
+.footer-glass {
+    width: 100%;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+    backdrop-filter: var(--backdrop-blur);
+    padding: 30px 0;
+    margin-top: auto;
+    z-index: 10;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.footer-logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+.footer-logo span {
+    color: var(--primary);
+}
+
+.footer-copy {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+.footer-nav-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.footer-nav-links a:hover {
+    color: var(--primary);
+}
+
+.footer-socials {
+    display: flex;
+    gap: 12px;
+}
+
+.social-icon-link {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: rgba(0, 0, 0, 0.03);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .social-icon-link {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.social-icon-link:hover {
+    color: var(--text-white);
+    background: var(--text-main);
+    border-color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+    }
+    
+    .footer-nav-links {
+        justify-content: center;
+    }
+    
+    .footer-socials {
+        justify-content: center;
+    }
+}
+
