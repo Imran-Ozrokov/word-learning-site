@@ -3,77 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WordBloom — Развивай словарный запас</title>
+    <title>WordLearn — Учим слова</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Шапка сайта -->
     <header class="header">
-        <div class="logo" id="logo-btn">WORDBLOOM</div>
+        <div class="logo" id="logo-btn" style="cursor: pointer;">Word<span>Learn</span></div>
         <div class="header-right">
+            <button id="theme-toggle" class="btn-theme">🌓 Тема</button>
             <nav class="nav">
-                <a href="#" class="nav-link active" id="nav-home">Start</a>
-                <a href="#" class="nav-link" id="nav-about-trigger">About</a>
-                <a href="#" class="nav-link">Paid Subscription</a>
-                <a href="#" class="nav-link">Support and Contacts</a>
+                <a href="#" class="nav-link active" id="nav-home">Главная</a>
+                <a href="#" class="nav-link" id="nav-trainer">Тренажёр</a>
+                <a href="#" class="nav-link" id="nav-dictionary">Прогресс</a>
             </nav>
-            <button id="theme-toggle" class="btn-theme">🌓</button>
         </div>
     </header>
 
-    <!-- Модальное окно "О нас" -->
     <div id="about-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-modal" id="close-modal-btn">&times;</span>
-            <h2>Наша миссия</h2>
-            <p>Мы верим, что изучение слов должно быть простым и вдохновляющим. WordBloom помогает раскрывать ваш потенциал без скучной зубрежки.</p>
-            <p>Автор проекта: <strong>Озроков Имран</strong>.</p>
-            <button id="reset-db-btn" class="btn-reset">Сбросить прогресс</button>
+            <h2>Коротко о WordLearn</h2>
+            <p>Я сделал этот site, чтобы нормально, без скучной зубрежки, учить новые иностранные слова. Всё работает на карточках: заходишь в нужную тему, кликаешь по слову, чтобы проверить перевод, и отмечаешь — знаешь ты его или нет.</p>
+            <p>Приложение само запоминает твой выбор и больше не подсовывает выученные слова в уроках, так что ты видишь только то, что реально надо повторить.</p>
+            <p>Автор проекта: <strong>Озроков Имран</strong>. Писал всё руками, настраивал логику, подбирал слова и делал удобный интерфейс, чтобы можно было заниматься и с телефона, и за компом.</p>
+            <button id="reset-db-btn" class="btn-reset">⚠️ Сбросить весь прогресс</button>
+            <div class="modal-footer">Имран, 2026</div>
         </div>
     </div>
 
-    <!-- ГЛАВНАЯ СТРАНИЦА -->
+    <div id="add-word-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" id="close-add-modal-btn">&times;</span>
+            <h2>Добавить новое слово</h2>
+            <form id="add-word-form">
+                <div class="form-group">
+                    <label>Слово на английском:</label>
+                    <input type="text" id="new-foreign" required placeholder="Например: Success">
+                </div>
+                <div class="form-group">
+                    <label>Перевод на русском:</label>
+                    <input type="text" id="new-russian" required placeholder="Например: Успех">
+                </div>
+                <div class="form-group">
+                    <label>Категория:</label>
+                    <select id="new-category">
+                        <option value="travel">Путешествия</option>
+                        <option value="food">Еда и рестораны</option>
+                        <option value="it">IT и Работа</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">Сохранить слово</button>
+            </form>
+        </div>
+    </div>
+
     <div id="home-page" class="page">
         <main class="hero-container">
-            
-            <!-- Левая текстовая часть -->
             <div class="hero-left">
-                <h1 class="main-title">Развивай словарный запас — раскрывай свой потенциал!</h1>
-                
-                <div class="social-links-minimal">
-                    <span>VK</span>
-                    <span>TG</span>
-                    <span>YT</span>
+                <h1>Прокачай свой словарный запас</h1>
+                <p class="subtitle">Изучайте новые иностранные слова каждый день с помощью интерактивных карточек.</p>
+                <div class="main-buttons">
+                    <button class="btn-start" id="start-learning-btn">Начать учить</button>
+                    <button class="btn-start btn-mix" id="mix-learning-btn">🎰 Случайный микс</button>
                 </div>
-
-                <button class="btn-primary-start" id="start-learning-btn">Начать</button>
                 
-                <!-- Блок со списком доступных уроков -->
-                <div class="lessons-section">
-                    <h2>Доступные уроки:</h2>
-                    <div class="lessons-grid">
-                        <div class="lesson-card" data-lesson="1">
-                            <h3>Урок №1</h3>
-                            <p>Первое знакомство</p>
-                        </div>
-                        <div class="lesson-card" data-lesson="2">
-                            <h3>Урок №2</h3>
-                            <p>Путешествия</p>
-                        </div>
-                        <div class="lesson-card" data-lesson="3">
-                            <h3>Урок №3</h3>
-                            <p>Еда и рестораны</p>
-                        </div>
-                        <div class="lesson-card" data-lesson="4">
-                            <h3>Урок №4</h3>
-                            <p>IT и Работа</p>
-                        </div>
+                <div class="categories-row">
+                    <div class="category-card" data-category="travel">
+                        <h4>🇬🇧 Путешествия</h4>
+                        <p id="count-travel">0 слов</p>
+                    </div>
+                    <div class="category-card" data-category="food">
+                        <h4>🍔 Еда и рестораны</h4>
+                        <p id="count-food">0 слов</p>
+                    </div>
+                    <div class="category-card" data-category="it">
+                        <h4>💻 IT и Работа</h4>
+                        <p id="count-it">0 слов</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Правая часть: Геометрическая фигура на чистом CSS -->
             <div class="hero-right">
                 <div class="geometric-art">
                     <div class="geo-circle-bg"></div>
@@ -85,16 +95,19 @@
                         <span></span>
                     </div>
                 </div>
+                <div class="goal-widget">
+                    <h3>Дневная цель</h3>
+                    <div class="goal-number" id="goal-total">0</div>
+                    <p class="goal-sub">Слов всего</p>
+                    <div class="goal-number green" id="goal-today">0</div>
+                    <p class="goal-sub">Выучено слов</p>
+                </div>
             </div>
-
         </main>
     </div>
 
-    <!-- ЭКРАН ТРЕНАЖЁРА (УРОКИ) -->
     <div id="trainer-page" class="page" style="display: none;">
         <main class="trainer-container">
-            
-            <!-- Верхняя зона: Прогресс-бар и кнопка На главную -->
             <div class="trainer-top-row">
                 <div class="trainer-progress-wrapper">
                     <div class="progress-bar-container">
@@ -104,71 +117,66 @@
                 <button class="btn-back-home" id="btn-leave-trainer">← На главную</button>
             </div>
 
-            <!-- Центральный контент урока -->
             <section class="lesson-zone">
                 <h1 id="lesson-title" class="lesson-main-heading">Урок №1: Первое знакомство</h1>
-                <p class="lesson-subheading">Вы на пути к расширению словарного запасa.</p>
+                <p class="lesson-subheading">Вы на пути к расширению словарного запаса.</p>
+                <div id="timer-display" class="timer-badge" style="display: none;">10с</div>
 
-                <!-- Большая центральная синяя карточка -->
                 <div class="word-card-bloom" id="card">
                     <button id="speak-btn" class="speak-btn-bloom" title="Прослушать">🔊</button>
-                    <h1 id="word-eng" class="word-foreign-text">КРАСНОРЕЧИВЫЙ</h1>
-                    <p id="word-rus" class="word-translation-text" style="display: none;">Загрузка перевода...</p>
+                    <h1 id="word-eng" class="word-foreign-text">Загрузка...</h1>
+                    <p id="word-rus" class="word-translation-text" style="display: none;">Загрузка...</p>
                     <p id="word-sentence" class="word-example-text"></p>
                 </div>
 
-                <!-- Кнопки управления ответом -->
                 <div class="trainer-actions-row">
                     <button class="btn-bloom btn-bloom-dont" id="dont-know-btn">Не знаю</button>
                     <button class="btn-bloom btn-bloom-know" id="know-btn">Знаю</button>
+                </div>
+                
+                <div class="trainer-settings">
+                    <label class="switch-label">
+                        <input type="checkbox" id="timer-toggle"> ⚡ Режим с таймером (10 сек)
+                    </label>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- ЭКРАН СЛОВАРЯ И ПРОГРЕССА (ПРИ НЕОБХОДИМОСТИ) -->
     <div id="dictionary-page" class="page" style="display: none;">
-        <main class="dictionary-container">
-            <div class="dictionary-header">
-                <h2>Мой словарь</h2>
-                <button id="open-add-modal-btn" class="btn-add-custom">➕ Новое слово</button>
+        <main class="container">
+            <div class="dictionary-left">
+                <div class="dictionary-header-row">
+                    <h2>Мой словарь</h2>
+                    <button id="open-add-modal-btn" class="btn-add-word">➕ Добавить слово</button>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="🔍 Найти слово по словарю...">
+                </div>
+
+                <div class="tags-container">
+                    <button class="tag active" data-tag="all">Все слова</button>
+                    <button class="tag" data-tag="travel">Путешествия</button>
+                    <button class="tag" data-tag="food">Еда</button>
+                    <button class="tag" data-tag="it">IT и Работа</button>
+                </div>
+
+                <div class="words-grid" id="dictionary-grid"></div>
             </div>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="🔍 Поиск по словам...">
+
+            <div class="dictionary-right">
+                <div class="stats-widget">
+                    <h3>Статистика</h3>
+                    <div class="stats-num" id="stats-all-words">0</div>
+                    <p class="stats-label">Всего слов в словаре</p>
+                    <div class="stats-num green" id="stats-learned-words">0</div>
+                    <p class="stats-label">Выучено полностью</p>
+                </div>
             </div>
-            <div class="words-grid" id="dictionary-grid"></div>
         </main>
     </div>
 
-    <!-- Модальное окно "Добавить слово" -->
-    <div id="add-word-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-modal" id="close-add-modal-btn">&times;</span>
-            <h2>Добавить новое слово</h2>
-            <form id="add-word-form">
-                <div class="form-group">
-                    <label>Слово:</label>
-                    <input type="text" id="new-foreign" required placeholder="Например: Fluent">
-                </div>
-                <div class="form-group">
-                    <label>Перевод:</label>
-                    <input type="text" id="new-russian" required placeholder="Например: Свободно говорящий">
-                </div>
-                <div class="form-group">
-                    <label>Категория (номер урока):</label>
-                    <select id="new-category">
-                        <option value="1">Урок 1: Знакомство</option>
-                        <option value="2">Урок 2: Путешествия</option>
-                        <option value="3">Урок 3: Еда</option>
-                        <option value="4">Урок 4: IT</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-submit">Сохранить</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Подключение логики -->
     <script src="script.js"></script>
 </body>
 </html>
