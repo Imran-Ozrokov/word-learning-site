@@ -1058,3 +1058,11 @@ body {
         padding: 0 24px;
     }
 }
+
+.page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex: 1; 
+    animation: fadeInPage 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
