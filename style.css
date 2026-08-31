@@ -1108,3 +1108,9 @@ body {
     transition: none; 
 }
 
+#card {
+    pointer-events: none;
+}
+#speak-btn {
+    pointer-events: auto;
+}
