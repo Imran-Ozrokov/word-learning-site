@@ -13,7 +13,9 @@ const initialWords = [
     { id: 12, foreign: "Island", russian: "Остров", category: "travel", learned: false, sentence: "They traveled to a tropical island." },
     { id: 13, foreign: "Route", russian: "Маршрут", category: "travel", learned: false, sentence: "This is the shortest route to the city." },
     { id: 14, foreign: "Border", russian: "Граница", category: "travel", learned: false, sentence: "We crossed the border in the morning." },
-    { id: 15, foreign: "Customs", russian: "Таможня", category: "travel", learned: false, sentence: "We had to go through customs at the airport." },
+    { id: 15, foreign: "Customs", russian: "Таможня", category: "travel", learned: false, sentence: "We had to go through customs at the airport." }
+];
+const initialWords2 = [
     { id: 16, foreign: "Suitcase", russian: "Чемодан", category: "travel", learned: false, sentence: "My suitcase is too heavy to lift." },
     { id: 17, foreign: "Visa", russian: "Виза", category: "travel", learned: false, sentence: "He applied for a tourist visa." },
     { id: 18, foreign: "Cruise", russian: "Круиз", category: "travel", learned: false, sentence: "They went on a luxury Mediterranean cruise." },
@@ -40,8 +42,6 @@ const initialWords = [
     { id: 39, foreign: "Breakfast", russian: "Завтрак", category: "food", learned: false, sentence: "Breakfast is the most important meal." },
     { id: 40, foreign: "Lunch", russian: "Обед", category: "food", learned: false, sentence: "Let's meet for lunch at one o'clock." }
 ];
-
-let wordsDatabase = JSON.parse(localStorage.getItem("words_db")) || initialWords;
 const foodWords = [
     { id: 41, foreign: "Bread", russian: "Хлеб", category: "food", learned: false, sentence: "She bought a fresh loaf of white bread." },
     { id: 42, foreign: "Cheese", russian: "Сыр", category: "food", learned: false, sentence: "This French cheese tastes incredible." },
@@ -112,8 +112,10 @@ const itWords = [
     { id: 105, foreign: "API", russian: "API / Интерфейс приложений", category: "it", learned: false, sentence: "The weather service provides a free public API." }
 ];
 
-if (!localStorage.getItem("words_db")) {
-    wordsDatabase = [...initialWords, ...foodWords, ...itWords];
+let wordsDatabase = JSON.parse(localStorage.getItem("words_db")) || [];
+
+if (wordsDatabase.length === 0) {
+    wordsDatabase = [...initialWords, ...initialWords2, ...foodWords, ...itWords];
     localStorage.setItem("words_db", JSON.stringify(wordsDatabase));
 }
 
@@ -121,6 +123,7 @@ let currentWords = [];
 let currentIndex = 0;
 let timerInterval = null;
 let isTimerActive = false;
+
 function saveToStorage() {
     localStorage.setItem("words_db", JSON.stringify(wordsDatabase));
 }
@@ -133,7 +136,6 @@ function speakWord(text) {
         window.speechSynthesis.speak(utterance);
     }
 }
-
 function switchPage(pageId) {
     document.querySelectorAll(".page").forEach(page => page.style.display = "none");
     document.querySelectorAll(".nav-link").forEach(link => link.classList.remove("active"));
@@ -149,6 +151,7 @@ function switchPage(pageId) {
     
     if (pageId !== "trainer") clearInterval(timerInterval);
 }
+
 function updateGlobalStats() {
     const total = wordsDatabase.length;
     const learned = wordsDatabase.filter(w => w.learned).length;
@@ -205,55 +208,6 @@ function startTraining(category = null, isMix = false) {
     switchPage("trainer");
     renderTrainerCard();
 }
-
-    
-    const word = currentWords[currentIndex];
-    
-    const wordEngEl = document.getElementById("word-eng");
-    const wordRusEl = document.getElementById("word-rus");
-    const wordSentenceEl = document.getElementById("word-sentence");
-    
-    if (wordEngEl) wordEngEl.textContent = word.foreign;
-    if (wordRusEl) {
-        wordRusEl.textContent = word.russian;
-        wordRusEl.style.display = "none";
-    }
-    if (wordSentenceEl) wordSentenceEl.textContent = word.sentence || "";
-    
-    const pBar = document.getElementById("p-bar");
-    if (pBar) {
-        const percent = (currentIndex / currentWords.length) * 100;
-        pBar.style.width = `${percent}%`;
-    }
-    
-    resetAndStartTimer();
-}
-
-function resetAndStartTimer() {
-    clearInterval(timerInterval);
-    const timerDisplay = document.getElementById("timer-display");
-    
-    if (!isTimerActive) {
-        if (timerDisplay) timerDisplay.style.display = "none";
-        return;
-    }
-    
-    if (timerDisplay) {
-        timerDisplay.style.display = "block";
-        let timeLeft = 10;
-        timerDisplay.textContent = `${timeLeft}с`;
-        
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            timerDisplay.textContent = `${timeLeft}с`;
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                handleAnswer(false);
-            }
-        }, 1000);
-    }
-}
-
 function handleAnswer(knewIt) {
     const cardEl = document.getElementById("card");
     if (!cardEl) return;
@@ -338,6 +292,30 @@ function renderTrainerCard() {
     resetAndStartTimer();
 }
 
+function resetAndStartTimer() {
+    clearInterval(timerInterval);
+    const timerDisplay = document.getElementById("timer-display");
+    
+    if (!isTimerActive) {
+        if (timerDisplay) timerDisplay.style.display = "none";
+        return;
+    }
+    
+    if (timerDisplay) {
+        timerDisplay.style.display = "block";
+        let timeLeft = 10;
+        timerDisplay.textContent = `${timeLeft}с`;
+        
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = `${timeLeft}с`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                handleAnswer(false);
+            }
+        }, 1000);
+    }
+}
 
 function renderDictionary() {
     const grid = document.getElementById("dictionary-grid");
@@ -511,9 +489,3 @@ document.addEventListener("DOMContentLoaded", () => {
     switchPage("home");
     updateGlobalStats();
 });
-    
-
-    const footerPrivacy = document.getElementById("footer-link-privacy");
-    if (footerPrivacy) {
-        footerPrivacy.addEventListener("click", (e) => { e.preventDefault(); alert("Все данные хранятся локально в вашем браузере через localStorage."); });
-    }
