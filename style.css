@@ -1073,10 +1073,47 @@ body {
     }
 }
 
-.page {
+.lesson-zone-premium {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    flex: 1; 
-    animation: fadeInPage 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden; 
+    position: relative;
+    padding: 20px 0;
 }
+
+.word-card-cinematic {
+    width: 100%;
+    height: 340px;
+    background: var(--card-blue);
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 30px 60px -15px rgba(37, 99, 235, 0.3);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.word-card-cinematic.slide-out-left {
+    transform: translateX(-150%) rotate(-15deg);
+    opacity: 0;
+}
+
+.word-card-cinematic.slide-out-right {
+    transform: translateX(150%) rotate(15deg);
+    opacity: 0;
+}
+
+.word-card-cinematic.slide-prepare {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: none; 
+}
+
