@@ -258,7 +258,7 @@ function handleAnswer(knewIt) {
             cardEl.classList.remove("slide-prepare");
         }, 50);
 
-    }, 450); 
+    }, 350); 
 }
 
 function renderTrainerCard() {
