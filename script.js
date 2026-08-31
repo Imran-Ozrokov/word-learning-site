@@ -444,15 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
     switchPage("home");
     updateGlobalStats();
 });
-    const footerHome = document.getElementById("footer-link-home");
-    if (footerHome) {
-        footerHome.addEventListener("click", (e) => { e.preventDefault(); switchPage("home"); });
-    }
-
-    const footerAbout = document.getElementById("footer-link-about");
-    if (footerAbout) {
-        footerAbout.addEventListener("click", (e) => { e.preventDefault(); document.getElementById("about-modal").style.display = "flex"; });
-    }
+    
 
     const footerPrivacy = document.getElementById("footer-link-privacy");
     if (footerPrivacy) {
