@@ -210,16 +210,27 @@ function startTraining(category = null, isMix = false) {
 }
 function handleAnswer(knewIt) {
     const cardEl = document.getElementById("card");
+    const dontKnowBtn = document.getElementById("dont-know-btn");
+    const rusText = document.getElementById("word-rus");
     if (!cardEl) return;
 
     if (knewIt) {
-        cardEl.classList.add("slide-out-right"); 
+        if (dontKnowBtn && dontKnowBtn.textContent === "Далее") {
+            dontKnowBtn.textContent = "Не знаю";
+        }
+        cardEl.classList.add("slide-out-right");
         const word = currentWords[currentIndex];
         const dbWord = wordsDatabase.find(w => w.id === word.id);
         if (dbWord) dbWord.learned = true;
         saveToStorage();
     } else {
-        cardEl.classList.add("slide-out-left"); 
+        if (dontKnowBtn && dontKnowBtn.textContent === "Не знаю") {
+            if (rusText) rusText.style.display = "block";
+            dontKnowBtn.textContent = "Далее";
+            return;
+        }
+        if (dontKnowBtn) dontKnowBtn.textContent = "Не знаю";
+        cardEl.classList.add("slide-out-left");
     }
 
     setTimeout(() => {
@@ -244,7 +255,7 @@ function handleAnswer(knewIt) {
             if (wordEngEl) wordEngEl.textContent = word.foreign;
             if (wordRusEl) {
                 wordRusEl.textContent = word.russian;
-                wordRusEl.style.display = "none"; 
+                wordRusEl.style.display = "none";
             }
             if (wordSentenceEl) wordSentenceEl.textContent = word.sentence || "";
             
@@ -258,8 +269,9 @@ function handleAnswer(knewIt) {
             cardEl.classList.remove("slide-prepare");
         }, 50);
 
-    }, 350); 
+    }, 350);
 }
+
 
 function renderTrainerCard() {
     if (currentIndex >= currentWords.length) {
@@ -396,9 +408,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     
-    document.getElementById("card").addEventListener("click", () => {
-        const rusText = document.getElementById("word-rus");
-        if (rusText) rusText.style.display = "block";
     });
     
     document.getElementById("speak-btn").addEventListener("click", (e) => {
