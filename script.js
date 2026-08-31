@@ -205,13 +205,7 @@ function startTraining(category = null, isMix = false) {
     switchPage("trainer");
     renderTrainerCard();
 }
-function renderTrainerCard() {
-    if (currentIndex >= currentWords.length) {
-        clearInterval(timerInterval);
-        alert("Поздравляем! Вы завершили текущий урок тренировки.");
-        switchPage("home");
-        return;
-    }
+
     
     const word = currentWords[currentIndex];
     
@@ -261,16 +255,89 @@ function resetAndStartTimer() {
 }
 
 function handleAnswer(knewIt) {
-    const word = currentWords[currentIndex];
+    const cardEl = document.getElementById("card");
+    if (!cardEl) return;
+
     if (knewIt) {
+        cardEl.classList.add("slide-out-right"); 
+        const word = currentWords[currentIndex];
         const dbWord = wordsDatabase.find(w => w.id === word.id);
         if (dbWord) dbWord.learned = true;
         saveToStorage();
+    } else {
+        cardEl.classList.add("slide-out-left"); 
+    }
+
+    setTimeout(() => {
+        currentIndex++;
+        
+        if (currentIndex >= currentWords.length) {
+            clearInterval(timerInterval);
+            alert("Поздравляем! Вы завершили текущий урок тренировки.");
+            switchPage("home");
+            cardEl.classList.remove("slide-out-left", "slide-out-right");
+            return;
+        }
+
+        cardEl.className = "word-card-cinematic slide-prepare";
+
+        setTimeout(() => {
+            const word = currentWords[currentIndex];
+            const wordEngEl = document.getElementById("word-eng");
+            const wordRusEl = document.getElementById("word-rus");
+            const wordSentenceEl = document.getElementById("word-sentence");
+            
+            if (wordEngEl) wordEngEl.textContent = word.foreign;
+            if (wordRusEl) {
+                wordRusEl.textContent = word.russian;
+                wordRusEl.style.display = "none"; 
+            }
+            if (wordSentenceEl) wordSentenceEl.textContent = word.sentence || "";
+            
+            const pBar = document.getElementById("p-bar");
+            if (pBar) {
+                const percent = (currentIndex / currentWords.length) * 100;
+                pBar.style.width = `${percent}%`;
+            }
+            
+            resetAndStartTimer();
+            cardEl.classList.remove("slide-prepare");
+        }, 50);
+
+    }, 400); 
+}
+
+function renderTrainerCard() {
+    if (currentIndex >= currentWords.length) {
+        clearInterval(timerInterval);
+        switchPage("home");
+        return;
     }
     
-    currentIndex++;
-    renderTrainerCard();
+    const cardEl = document.getElementById("card");
+    if (cardEl) cardEl.className = "word-card-cinematic";
+
+    const word = currentWords[currentIndex];
+    const wordEngEl = document.getElementById("word-eng");
+    const wordRusEl = document.getElementById("word-rus");
+    const wordSentenceEl = document.getElementById("word-sentence");
+    
+    if (wordEngEl) wordEngEl.textContent = word.foreign;
+    if (wordRusEl) {
+        wordRusEl.textContent = word.russian;
+        wordRusEl.style.display = "none";
+    }
+    if (wordSentenceEl) wordSentenceEl.textContent = word.sentence || "";
+    
+    const pBar = document.getElementById("p-bar");
+    if (pBar) {
+        const percent = (currentIndex / currentWords.length) * 100;
+        pBar.style.width = `${percent}%`;
+    }
+    
+    resetAndStartTimer();
 }
+
 
 function renderDictionary() {
     const grid = document.getElementById("dictionary-grid");
