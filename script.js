@@ -408,8 +408,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     
-    });
-    
     document.getElementById("speak-btn").addEventListener("click", (e) => {
         e.stopPropagation();
         const wordText = document.getElementById("word-eng").textContent;
