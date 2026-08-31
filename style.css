@@ -1,3 +1,9 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 :root {
     --bg-body: #F8FAFC;
     --bg-card: rgba(255, 255, 255, 0.75);
@@ -167,6 +173,7 @@ body {
     justify-content: center;
     animation: fadeInPage 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     flex-grow: 1;
+    flex-shrink: 0;
 }
 
 .hero-container, .container {
@@ -990,6 +997,8 @@ body {
     backdrop-filter: var(--backdrop-blur);
     z-index: 10;
     box-sizing: border-box;
+    margin-top: auto; 
+    flex-shrink: 0;
 }
 
 .footer-container {
