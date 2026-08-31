@@ -226,7 +226,8 @@ function handleAnswer(knewIt) {
     } else {
         if (dontKnowBtn && dontKnowBtn.textContent === "Не знаю") {
             if (rusText) rusText.style.display = "block";
-            dontKnowBtn.textContent = "Далее";
+            if (dontKnowBtn) dontKnowBtn.textContent = "Далее";
+            clearInterval(timerInterval);
             return;
         }
         if (dontKnowBtn) dontKnowBtn.textContent = "Не знаю";
@@ -271,7 +272,6 @@ function handleAnswer(knewIt) {
 
     }, 350);
 }
-
 
 function renderTrainerCard() {
     if (currentIndex >= currentWords.length) {
